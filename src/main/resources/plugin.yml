@@ -1,0 +1,21 @@
+name: RoseKingdom
+version: '${project.version}'
+main: me.rosekingdom.rosekingdom.RoseKingdom
+api-version: 1.19
+prefix: RK
+authors: [ TMG8047KG ]
+description: Plugin made for the Rose Kingdom Server
+commands:
+  temp_bm:
+    description: Gives you a bronze medal
+    usage: /<command>
+  coords:
+    description: Sends your coordinates to a selected Player
+    usage: /<command>
+    aliases:
+      - cd
+      - xy
+      - xyz
+      - crd
+  spawnentity:
+    description: Spawns entity's
