@@ -1,7 +1,6 @@
-package me.rosekingdom.rosekingdom.commands;
+package me.rosekingdom.rosekingdom.Commands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -46,6 +45,9 @@ public class Coordinates_Share implements TabExecutor {
                 playerNames.add(players[i].getName());
             }
             return playerNames;
+        }
+        if(args.length > 1){
+            return List.of();
         }
         return null;
     }

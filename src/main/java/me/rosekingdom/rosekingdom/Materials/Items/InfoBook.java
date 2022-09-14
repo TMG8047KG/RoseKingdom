@@ -1,4 +1,4 @@
-package me.rosekingdom.rosekingdom.items;
+package me.rosekingdom.rosekingdom.Materials.Items;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

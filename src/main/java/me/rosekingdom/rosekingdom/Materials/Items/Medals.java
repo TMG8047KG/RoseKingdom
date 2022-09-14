@@ -1,4 +1,4 @@
-package me.rosekingdom.rosekingdom.items;
+package me.rosekingdom.rosekingdom.Materials.Items;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
