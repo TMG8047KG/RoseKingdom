@@ -12,10 +12,9 @@ commands:
     usage: /<command>
   coords:
     description: Sends your coordinates to a selected Player
-    usage: /<command>
+    usage: /<command> <Player>
     aliases:
       - cd
-      - xy
       - xyz
       - crd
   spawnentity:
