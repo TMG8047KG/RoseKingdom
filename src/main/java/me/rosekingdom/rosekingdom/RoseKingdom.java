@@ -6,10 +6,21 @@ import me.rosekingdom.rosekingdom.Listeners.*;
 import me.rosekingdom.rosekingdom.Materials.Items.Bucket_Hats;
 import me.rosekingdom.rosekingdom.Materials.Items.Mushroom_Hats;
 import me.rosekingdom.rosekingdom.Materials.Items.Medals;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.io.IOException;
 
 
 public final class RoseKingdom extends JavaPlugin {
+
+    private File playersConfigFile;
+    private FileConfiguration playerConfig;
+    private String file = "playersData.yml";
+
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -24,6 +35,28 @@ public final class RoseKingdom extends JavaPlugin {
         Bucket_Hats.init();
         Mushroom_Hats.init();
         Commands();
+
+        createPlayersConfigFile();
+    }
+
+    public FileConfiguration getPlayerConfig(){
+        return this.playerConfig;
+    }
+
+    private void createPlayersConfigFile(){
+        playersConfigFile = new File(getDataFolder(), file);
+        if(!playersConfigFile.exists()){
+            playersConfigFile.getParentFile().mkdir();
+            saveResource(file, false);
+        }
+
+        playerConfig = new YamlConfiguration();
+        try {
+            playerConfig.load(playersConfigFile);
+        }catch (IOException | InvalidConfigurationException e){
+            e.printStackTrace();
+        }
+
     }
 
     public void Commands(){
