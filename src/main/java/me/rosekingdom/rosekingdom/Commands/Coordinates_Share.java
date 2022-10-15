@@ -1,24 +1,32 @@
 package me.rosekingdom.rosekingdom.Commands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.bukkit.Bukkit.getLogger;
 
-public class Coordinates_Share implements TabExecutor {
+public class Coordinates_Share extends CommandCore {
 
     public int x;
     public int y;
     public int z;
     private boolean nonPlayer;
+
+    public Coordinates_Share(JavaPlugin plugin){
+        super(plugin);
+        this.addAlias("coords");
+        this.addAlias("xyz");
+        this.addAlias("crd");
+        this.addAlias("cd");
+    }
+
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean execute(CommandSender sender, String[] args) {
         if(sender instanceof Player p){
 
             if(args.length > 0){
@@ -71,7 +79,7 @@ public class Coordinates_Share implements TabExecutor {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+    public List<String> tabComplete(CommandSender sender, String[] args) {
         if (args.length == 1) {
             Player player = (Player) sender;
             List<String> playerNames = new ArrayList<>();

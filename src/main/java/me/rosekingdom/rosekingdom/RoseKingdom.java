@@ -26,26 +26,27 @@ public final class RoseKingdom extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         getLogger().info("[RoseKingdom] Loaded!");
+
         getServer().getPluginManager().registerEvents(new JoinLeaveListener(), this);
         getServer().getPluginManager().registerEvents(new Unplaceable_Hats(), this);
-//        getServer().getPluginManager().registerEvents(new Riding_Player_Listener(), this);
-//        getServer().getPluginManager().registerEvents(new Chair(), this);
-//        getServer().getPluginManager().registerEvents(new Sign_Rewrite(), this);
-
-        new CommandManager(this);
 
         Medals.init();
         Bucket_Hats.init();
         Mushroom_Hats.init();
-        Commands();
 
+        //TODO
+        // Make a perPlayerDataSaver
         //createPlayersConfigFile();
+
+        new CommandManager(this);
     }
 
     public FileConfiguration getPlayerConfig(){
         return this.playerConfig;
     }
 
+    //TODO
+    // Finish this down here (perPlayerData file)
     private void createPlayersConfigFile(){
         playersConfigFile = new File(getDataFolder(), file);
         if(!playersConfigFile.exists()){
@@ -59,12 +60,6 @@ public final class RoseKingdom extends JavaPlugin {
         }catch (IOException | InvalidConfigurationException e){
             e.printStackTrace();
         }
-
-    }
-
-    public void Commands(){
-        getCommand("coords").setExecutor(new Coordinates_Share());
-        getCommand("spawnentity").setExecutor(new SpawnEntity());
 
     }
 

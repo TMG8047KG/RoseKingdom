@@ -1,7 +1,7 @@
 package me.rosekingdom.rosekingdom.Handlers;
 
-import me.rosekingdom.rosekingdom.Commands.Command;
-import me.rosekingdom.rosekingdom.Commands.TestCommand;
+import me.rosekingdom.rosekingdom.Commands.CommandCore;
+import me.rosekingdom.rosekingdom.Commands.Coordinates_Share;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,7 +11,7 @@ import java.util.List;
 public class CommandManager implements TabExecutor {
 
     private JavaPlugin plugin;
-    private ArrayList<Command> commands;
+    private ArrayList<CommandCore> commands;
 
     public CommandManager(JavaPlugin pm){
         plugin = pm;
@@ -20,18 +20,18 @@ public class CommandManager implements TabExecutor {
         RegisterCommands();
     }
 
-    public void addCommand(Command command){
+    public void addCommand(CommandCore command){
         commands.add(command);
     }
 
-    public ArrayList<Command> getCommands(){
+    public ArrayList<CommandCore> getCommands(){
         return commands;
     }
     public void CommandList(){
-        addCommand(new TestCommand(plugin));
+        addCommand(new Coordinates_Share(plugin));
     }
     public void RegisterCommands(){
-        for(Command command : getCommands()){
+        for(CommandCore command : getCommands()){
             for(String aliases : command.getAliases()){
                 plugin.getCommand(aliases).setExecutor(this);
             }
@@ -40,12 +40,12 @@ public class CommandManager implements TabExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
-        for(Command cm : getCommands()){
+        for(CommandCore cm : getCommands()){
             if(cm.getAliases().contains(label.toLowerCase())){
                 try{
                     cm.execute(sender, args);
                 }catch (Exception e){
-                    sender.sendMessage("§cSomething went wrong!");
+                    sender.sendMessage("§cSomething went wrong! Report to the Owner!");
                 }
             }return true;
         }
@@ -54,6 +54,15 @@ public class CommandManager implements TabExecutor {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
+        for(CommandCore cmd : getCommands()){
+            if(cmd.getAliases().contains(label.toLowerCase())){
+                try {
+                    return cmd.tabComplete(sender, args);
+                }catch (Exception e){
+                    plugin.getLogger().warning("Command's TabCompletion doesn't work!");
+                }
+            }
+        }
         return null;
     }
 }
