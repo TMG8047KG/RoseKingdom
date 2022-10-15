@@ -2,6 +2,7 @@ package me.rosekingdom.rosekingdom;
 
 import me.rosekingdom.rosekingdom.Commands.Coordinates_Share;
 import me.rosekingdom.rosekingdom.Commands.SpawnEntity;
+import me.rosekingdom.rosekingdom.Handlers.CommandManager;
 import me.rosekingdom.rosekingdom.Listeners.*;
 import me.rosekingdom.rosekingdom.Materials.Items.Bucket_Hats;
 import me.rosekingdom.rosekingdom.Materials.Items.Mushroom_Hats;
@@ -31,12 +32,14 @@ public final class RoseKingdom extends JavaPlugin {
 //        getServer().getPluginManager().registerEvents(new Chair(), this);
 //        getServer().getPluginManager().registerEvents(new Sign_Rewrite(), this);
 
+        new CommandManager(this);
+
         Medals.init();
         Bucket_Hats.init();
         Mushroom_Hats.init();
         Commands();
 
-        createPlayersConfigFile();
+        //createPlayersConfigFile();
     }
 
     public FileConfiguration getPlayerConfig(){
@@ -62,6 +65,7 @@ public final class RoseKingdom extends JavaPlugin {
     public void Commands(){
         getCommand("coords").setExecutor(new Coordinates_Share());
         getCommand("spawnentity").setExecutor(new SpawnEntity());
+
     }
 
     @Override

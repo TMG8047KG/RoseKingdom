@@ -19,3 +19,5 @@ commands:
       - crd
   spawnentity:
     description: Spawns entity's
+  test:
+    description: test
