@@ -2,6 +2,7 @@ package me.rosekingdom.rosekingdom.Commands;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,8 @@ public abstract class CommandCore {
 
     protected JavaPlugin plugin;
     private ArrayList<String> aliases = new ArrayList<>();
+
+    private ArrayList<String> subCommands = new ArrayList<>();
     private String syntax;
     private String description;
 
@@ -53,6 +56,19 @@ public abstract class CommandCore {
 
     public String getDescription(){
         return description;
+    }
+
+    //-------------------
+    public ArrayList<String> getSubCommands(){
+        return subCommands;
+    }
+
+    public void addSubCommand(String command){
+        subCommands.add(command);
+    }
+
+    public void setSubCommnads(ArrayList<String> subCommands) {
+        this.subCommands = subCommands;
     }
 
     //Main Methods

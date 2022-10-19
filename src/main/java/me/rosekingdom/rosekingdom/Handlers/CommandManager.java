@@ -2,6 +2,10 @@ package me.rosekingdom.rosekingdom.Handlers;
 
 import me.rosekingdom.rosekingdom.Commands.CommandCore;
 import me.rosekingdom.rosekingdom.Commands.Coordinates_Share;
+import me.rosekingdom.rosekingdom.Commands.SpawnEntity;
+import me.rosekingdom.rosekingdom.Commands.SubCommands.SubCommand;
+import me.rosekingdom.rosekingdom.Commands.SubCommands.Test1;
+import me.rosekingdom.rosekingdom.Commands.SubCommands.Test2;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,11 +16,14 @@ public class CommandManager implements TabExecutor {
 
     private JavaPlugin plugin;
     private ArrayList<CommandCore> commands;
+    private ArrayList<SubCommand> subCommands;
 
     public CommandManager(JavaPlugin pm){
         plugin = pm;
         commands = new ArrayList<>();
+        subCommands = new ArrayList<>();
         CommandList();
+        SubCommandList();
         RegisterCommands();
     }
 
@@ -24,12 +31,29 @@ public class CommandManager implements TabExecutor {
         commands.add(command);
     }
 
+    public void addSubCommand(SubCommand subCommand){
+        subCommands.add(subCommand);
+    }
+
+    public ArrayList<SubCommand> getSubCommands() {
+        return subCommands;
+    }
+
     public ArrayList<CommandCore> getCommands(){
         return commands;
     }
+
     public void CommandList(){
         addCommand(new Coordinates_Share(plugin));
+        addCommand(new SpawnEntity(plugin));
     }
+
+    public void SubCommandList(){
+        addSubCommand(new Test1(plugin));
+        addSubCommand(new Test2(plugin));
+
+    }
+
     public void RegisterCommands(){
         for(CommandCore command : getCommands()){
             for(String aliases : command.getAliases()){
@@ -43,6 +67,13 @@ public class CommandManager implements TabExecutor {
         for(CommandCore cm : getCommands()){
             if(cm.getAliases().contains(label.toLowerCase())){
                 try{
+                    if(!(cm.getSubCommands().isEmpty())){
+                        for(SubCommand sc : getSubCommands()){
+                            if((cm.getSubCommands().contains(sc)) && sc.getSubAliases().contains(label.toLowerCase())){
+                                sc.execute(sender, args);
+                            }
+                        }
+                    }
                     cm.execute(sender, args);
                 }catch (Exception e){
                     sender.sendMessage("§cSomething went wrong! Report to the Owner!");
