@@ -6,6 +6,7 @@ import me.rosekingdom.rosekingdom.Commands.SpawnEntity;
 import me.rosekingdom.rosekingdom.Commands.SubCommands.SubCommand;
 import me.rosekingdom.rosekingdom.Commands.SubCommands.Test1;
 import me.rosekingdom.rosekingdom.Commands.SubCommands.Test2;
+import me.rosekingdom.rosekingdom.Commands.sub;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -46,6 +47,7 @@ public class CommandManager implements TabExecutor {
     public void CommandList(){
         addCommand(new Coordinates_Share(plugin));
         addCommand(new SpawnEntity(plugin));
+        addCommand(new sub(plugin));
     }
 
     public void SubCommandList(){
@@ -69,7 +71,7 @@ public class CommandManager implements TabExecutor {
                 try{
                     if(!(cm.getSubCommands().isEmpty())){
                         for(SubCommand sc : getSubCommands()){
-                            if((cm.getSubCommands().contains(sc)) && sc.getSubAliases().contains(label.toLowerCase())){
+                            if((cm.getSubCommands().contains(sc.getSubSyntax())) && sc.getSubAliases().contains(label.toLowerCase())){
                                 sc.execute(sender, args);
                             }
                         }

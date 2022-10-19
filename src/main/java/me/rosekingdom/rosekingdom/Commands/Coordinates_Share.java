@@ -1,6 +1,7 @@
 package me.rosekingdom.rosekingdom.Commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -15,6 +16,7 @@ public class Coordinates_Share extends CommandCore {
     public int x;
     public int y;
     public int z;
+    public World.Environment dimension;
     private boolean nonPlayer;
 
     public Coordinates_Share(JavaPlugin plugin){
@@ -34,6 +36,8 @@ public class Coordinates_Share extends CommandCore {
                 x = p.getLocation().getBlockX();
                 y = p.getLocation().getBlockY();
                 z = p.getLocation().getBlockZ();
+
+                dimension = p.getWorld().getEnvironment();
 
                 Player[] players = new Player[Bukkit.getServer().getOnlinePlayers().size()];
                 Bukkit.getServer().getOnlinePlayers().toArray(players);
@@ -60,12 +64,12 @@ public class Coordinates_Share extends CommandCore {
                             return true;
                         }
                         target = Bukkit.getPlayer(args[0]);
-                        if(target.getName().equals(p.getName())){
-                            p.sendMessage("§cYou can't send your coordinates to yourself!");
-                            return true;
-                        }
+//                        if(target.getName().equals(p.getName())){
+//                            p.sendMessage("§cYou can't send your coordinates to yourself!");
+//                            return true;
+//                        }
 
-                        target.sendMessage("§e" + p.getName() + " send his (current) coordinates to you§6X:§r " + x + "§6 Y:§r " + y + "§6 Z:§r " + z);
+                        target.sendMessage("§e" + p.getName() + " send his (current) coordinates to you§6X:§r " + x + "§6 Y:§r " + y + "§6 Z:§r " + z + " Dimension: " + dimension);
                         p.sendMessage("§eYou send your coordinates to " + target.getName());
                     }
                 }catch (Exception e){

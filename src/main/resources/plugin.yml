@@ -16,6 +16,8 @@ commands:
       - crd
   spawnentity:
     description: Spawns entity's
+  sub:
+    description: ebfhgthisdffo
   test1:
     description: asd
   test2:
