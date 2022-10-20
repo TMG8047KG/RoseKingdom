@@ -1,5 +1,6 @@
 package me.rosekingdom.rosekingdom.Commands;
 
+import me.rosekingdom.rosekingdom.Handlers.CommandRK;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -11,7 +12,7 @@ import java.util.List;
 
 import static org.bukkit.Bukkit.getLogger;
 
-public class Coordinates_Share extends CommandCore {
+public class Coordinates_Share extends CommandRK {
 
     public int x;
     public int y;
@@ -21,7 +22,7 @@ public class Coordinates_Share extends CommandCore {
 
     public Coordinates_Share(JavaPlugin plugin){
         super(plugin);
-        this.addAlias("coords");
+        this.addName("coords");
         this.addAlias("xyz");
         this.addAlias("crd");
         this.addAlias("cd");
@@ -37,6 +38,8 @@ public class Coordinates_Share extends CommandCore {
                 y = p.getLocation().getBlockY();
                 z = p.getLocation().getBlockZ();
 
+                //TODO:
+                // Add Dimension to the output message
                 dimension = p.getWorld().getEnvironment();
 
                 Player[] players = new Player[Bukkit.getServer().getOnlinePlayers().size()];
@@ -64,12 +67,12 @@ public class Coordinates_Share extends CommandCore {
                             return true;
                         }
                         target = Bukkit.getPlayer(args[0]);
-//                        if(target.getName().equals(p.getName())){
-//                            p.sendMessage("§cYou can't send your coordinates to yourself!");
-//                            return true;
-//                        }
+                        if(target.getName().equals(p.getName())){
+                            p.sendMessage("§cYou can't send your coordinates to yourself!");
+                            return true;
+                        }
 
-                        target.sendMessage("§e" + p.getName() + " send his (current) coordinates to you§6X:§r " + x + "§6 Y:§r " + y + "§6 Z:§r " + z + " Dimension: " + dimension);
+                        target.sendMessage("§e" + p.getName() + " send his (current) coordinates to you§6X:§r " + x + "§6 Y:§r " + y + "§6 Z:§r " + z);
                         p.sendMessage("§eYou send your coordinates to " + target.getName());
                     }
                 }catch (Exception e){

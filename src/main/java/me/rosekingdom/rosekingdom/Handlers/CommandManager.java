@@ -1,9 +1,7 @@
 package me.rosekingdom.rosekingdom.Handlers;
 
-import me.rosekingdom.rosekingdom.Commands.CommandCore;
 import me.rosekingdom.rosekingdom.Commands.Coordinates_Share;
 import me.rosekingdom.rosekingdom.Commands.SpawnEntity;
-import me.rosekingdom.rosekingdom.Commands.SubCommands.SubCommand;
 import me.rosekingdom.rosekingdom.Commands.SubCommands.Test1;
 import me.rosekingdom.rosekingdom.Commands.SubCommands.Test2;
 import me.rosekingdom.rosekingdom.Commands.sub;
@@ -16,31 +14,25 @@ import java.util.List;
 public class CommandManager implements TabExecutor {
 
     private JavaPlugin plugin;
-    private ArrayList<CommandCore> commands;
+    private ArrayList<CommandRK> commands;
     private ArrayList<SubCommand> subCommands;
 
     public CommandManager(JavaPlugin pm){
         plugin = pm;
         commands = new ArrayList<>();
-        subCommands = new ArrayList<>();
         CommandList();
         SubCommandList();
         RegisterCommands();
     }
 
-    public void addCommand(CommandCore command){
+    public void addCommand(CommandRK command){
         commands.add(command);
     }
 
     public void addSubCommand(SubCommand subCommand){
         subCommands.add(subCommand);
     }
-
-    public ArrayList<SubCommand> getSubCommands() {
-        return subCommands;
-    }
-
-    public ArrayList<CommandCore> getCommands(){
+    public ArrayList<CommandRK> getCommands(){
         return commands;
     }
 
@@ -53,11 +45,11 @@ public class CommandManager implements TabExecutor {
     public void SubCommandList(){
         addSubCommand(new Test1(plugin));
         addSubCommand(new Test2(plugin));
-
     }
 
     public void RegisterCommands(){
-        for(CommandCore command : getCommands()){
+        for(CommandRK command : getCommands()){
+            plugin.getCommand(command.getName()).setExecutor(this);
             for(String aliases : command.getAliases()){
                 plugin.getCommand(aliases).setExecutor(this);
             }
@@ -66,16 +58,9 @@ public class CommandManager implements TabExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
-        for(CommandCore cm : getCommands()){
-            if(cm.getAliases().contains(label.toLowerCase())){
+        for(CommandRK cm : getCommands()){
+            if(cm.getName().contains(label.toLowerCase()) || cm.getAliases().contains(label.toLowerCase())){
                 try{
-                    if(!(cm.getSubCommands().isEmpty())){
-                        for(SubCommand sc : getSubCommands()){
-                            if((cm.getSubCommands().contains(sc.getSubSyntax())) && sc.getSubAliases().contains(label.toLowerCase())){
-                                sc.execute(sender, args);
-                            }
-                        }
-                    }
                     cm.execute(sender, args);
                 }catch (Exception e){
                     sender.sendMessage("§cSomething went wrong! Report to the Owner!");
@@ -87,12 +72,12 @@ public class CommandManager implements TabExecutor {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
-        for(CommandCore cmd : getCommands()){
+        for(CommandRK cmd : getCommands()){
             if(cmd.getAliases().contains(label.toLowerCase())){
                 try {
                     return cmd.tabComplete(sender, args);
                 }catch (Exception e){
-                    plugin.getLogger().warning("Command's TabCompletion doesn't work!");
+                    plugin.getLogger().warning("§c"+ sender + " tab completion for the " + label + " doesn't work!");
                 }
             }
         }

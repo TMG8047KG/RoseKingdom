@@ -1,4 +1,4 @@
-package me.rosekingdom.rosekingdom.Commands.SubCommands;
+package me.rosekingdom.rosekingdom.Handlers;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -9,11 +9,8 @@ import java.util.List;
 public abstract class SubCommand {
 
     protected JavaPlugin plugin;
-
-    private ArrayList<String> subAliases = new ArrayList<>();
-
+    private ArrayList<String> аliases = new ArrayList<>();
     private String syntax;
-
     private String description;
 
     public SubCommand(JavaPlugin pl){
@@ -22,36 +19,36 @@ public abstract class SubCommand {
 
     //=====================
 
-    public String getSubDescription(){
+    public String getDescription(){
         return description;
     }
 
-    public void addSubDescription(String description){
+    public void addDescription(String description){
         this.description = description;
     }
 
     //======================
 
-    public String getSubSyntax(){
+    public String getSyntax(){
         return syntax;
     }
 
-    public void setSubSyntax(){
+    public void setSyntax(){
         this.syntax = syntax;
     }
 
     //=====================
 
-    public ArrayList<String> getSubAliases(){
-        return subAliases;
+    public ArrayList<String> getAliases(){
+        return аliases;
     }
 
-    public void addSubAlias(String alias){
-        subAliases.add(alias);
+    public void addAlias(String alias){
+        аliases.add(alias);
     }
 
-    public void setSubAliases(ArrayList<String> subAliases){
-        this.subAliases = subAliases;
+    public void setAliases(ArrayList<String> аliases){
+        this.аliases = аliases;
     }
 
     //======================

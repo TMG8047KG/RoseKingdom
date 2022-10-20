@@ -1,5 +1,6 @@
 package me.rosekingdom.rosekingdom.Commands;
 
+import me.rosekingdom.rosekingdom.Handlers.CommandRK;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -8,7 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpawnEntity extends CommandCore {
+public class SpawnEntity extends CommandRK {
 
     public SpawnEntity(JavaPlugin plugin){
         super(plugin);

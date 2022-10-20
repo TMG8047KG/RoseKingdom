@@ -1,28 +1,36 @@
-package me.rosekingdom.rosekingdom.Commands;
+package me.rosekingdom.rosekingdom.Handlers;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class CommandCore {
+public abstract class CommandRK {
 
     protected JavaPlugin plugin;
     private ArrayList<String> aliases = new ArrayList<>();
-
-    private ArrayList<String> subCommands = new ArrayList<>();
+    private ArrayList<SubCommand> subCommand = new ArrayList<>();
     private String syntax;
     private String description;
+    private String name;
 
-    public CommandCore(JavaPlugin pl){
+    public CommandRK(JavaPlugin pl){
         plugin = pl;
     }
 
     /*========================
      Command name and it's alternatives
      ========================*/
+    public void addName(String name){
+        this.name = name;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    //-----------------------
 
     public ArrayList<String> getAliases(){
         return aliases;
@@ -56,19 +64,6 @@ public abstract class CommandCore {
 
     public String getDescription(){
         return description;
-    }
-
-    //-------------------
-    public ArrayList<String> getSubCommands(){
-        return subCommands;
-    }
-
-    public void addSubCommand(String command){
-        subCommands.add(command);
-    }
-
-    public void setSubCommnads(ArrayList<String> subCommands) {
-        this.subCommands = subCommands;
     }
 
     //Main Methods
