@@ -9,7 +9,8 @@ import java.util.List;
 public abstract class SubCommand {
 
     protected JavaPlugin plugin;
-    private ArrayList<String> аliases = new ArrayList<>();
+
+    private ArrayList<String> subAlieses = new ArrayList<>();
     private String syntax;
     private String description;
 
@@ -40,15 +41,15 @@ public abstract class SubCommand {
     //=====================
 
     public ArrayList<String> getAliases(){
-        return аliases;
+        return subAlieses;
     }
 
     public void addAlias(String alias){
-        аliases.add(alias);
+        subAlieses.add(alias);
     }
 
-    public void setAliases(ArrayList<String> аliases){
-        this.аliases = аliases;
+    public void setAliases(ArrayList<String> aliases){
+        this.subAlieses = aliases;
     }
 
     //======================

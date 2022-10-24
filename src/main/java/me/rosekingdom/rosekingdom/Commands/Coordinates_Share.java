@@ -22,7 +22,7 @@ public class Coordinates_Share extends CommandRK {
 
     public Coordinates_Share(JavaPlugin plugin){
         super(plugin);
-        this.addName("coords");
+        this.addAlias("cords");
         this.addAlias("xyz");
         this.addAlias("crd");
         this.addAlias("cd");

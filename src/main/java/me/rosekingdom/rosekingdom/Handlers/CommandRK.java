@@ -10,10 +10,9 @@ public abstract class CommandRK {
 
     protected JavaPlugin plugin;
     private ArrayList<String> aliases = new ArrayList<>();
-    private ArrayList<SubCommand> subCommand = new ArrayList<>();
+    private ArrayList<String> subCommands = new ArrayList<>();
     private String syntax;
     private String description;
-    private String name;
 
     public CommandRK(JavaPlugin pl){
         plugin = pl;
@@ -22,16 +21,6 @@ public abstract class CommandRK {
     /*========================
      Command name and it's alternatives
      ========================*/
-    public void addName(String name){
-        this.name = name;
-    }
-
-    public String getName(){
-        return name;
-    }
-
-    //-----------------------
-
     public ArrayList<String> getAliases(){
         return aliases;
     }
@@ -42,6 +31,24 @@ public abstract class CommandRK {
 
     public void setAliases(ArrayList<String> aliases) {
         this.aliases = aliases;
+    }
+
+    //-----------------------
+
+    public ArrayList<String> getSubCommands(){
+        return subCommands;
+    }
+
+    public void addSubCommand(String subCommand){
+        subCommands.add(subCommand);
+    }
+
+    public void setSubCommands(ArrayList<String> subCommands){
+        this.subCommands = subCommands;
+    }
+
+    public boolean hasSubCommands(){
+        return subCommands.size() != 0;
     }
 
     //------------------

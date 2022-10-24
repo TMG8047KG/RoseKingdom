@@ -20,6 +20,7 @@ public class CommandManager implements TabExecutor {
     public CommandManager(JavaPlugin pm){
         plugin = pm;
         commands = new ArrayList<>();
+        subCommands = new ArrayList<>();
         CommandList();
         SubCommandList();
         RegisterCommands();
@@ -28,12 +29,14 @@ public class CommandManager implements TabExecutor {
     public void addCommand(CommandRK command){
         commands.add(command);
     }
-
     public void addSubCommand(SubCommand subCommand){
         subCommands.add(subCommand);
     }
     public ArrayList<CommandRK> getCommands(){
         return commands;
+    }
+    public ArrayList<SubCommand> getSubCommands() {
+        return subCommands;
     }
 
     public void CommandList(){
@@ -49,19 +52,34 @@ public class CommandManager implements TabExecutor {
 
     public void RegisterCommands(){
         for(CommandRK command : getCommands()){
-            plugin.getCommand(command.getName()).setExecutor(this);
-            for(String aliases : command.getAliases()){
-                plugin.getCommand(aliases).setExecutor(this);
+            try {
+                for(String aliases : command.getAliases()){
+                    plugin.getCommand(aliases).setExecutor(this);
+                }
+            }catch (Exception e){
+                plugin.getLogger().warning("Exception: " + e);
+                plugin.getLogger().warning("Name of the command: " + command.getAliases() + ", " + command );
             }
+
         }
     }
 
     @Override
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
         for(CommandRK cm : getCommands()){
-            if(cm.getName().contains(label.toLowerCase()) || cm.getAliases().contains(label.toLowerCase())){
+            if(cm.getAliases().contains(label.toLowerCase())){
                 try{
-                    cm.execute(sender, args);
+                    if(cm.hasSubCommands() && args.length > 0){
+                        for(SubCommand sub : getSubCommands()){
+                            for(String aliases : sub.getAliases()){
+                                if(args[0].equalsIgnoreCase(aliases)){
+                                    sub.execute(sender, args);
+                                }
+                            }
+                        }
+                    }else{
+                        cm.execute(sender, args);
+                    }
                 }catch (Exception e){
                     sender.sendMessage("§cSomething went wrong! Report to the Owner!");
                 }
@@ -78,6 +96,7 @@ public class CommandManager implements TabExecutor {
                     return cmd.tabComplete(sender, args);
                 }catch (Exception e){
                     plugin.getLogger().warning("§c"+ sender + " tab completion for the " + label + " doesn't work!");
+                    plugin.getLogger().warning("Error: " + e);
                 }
             }
         }

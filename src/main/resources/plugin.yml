@@ -7,7 +7,7 @@ author: TMG8047KG
 description: Plugin made for the Rose Kingdom Server
 
 commands:
-  coords:
+  cords:
     description: Sends your coordinates to a selected Player
     usage: /<command> <Player>
     aliases:
@@ -18,3 +18,4 @@ commands:
     description: Spawns entity's
   sub:
     description: ebfhgthisdffo
+    usage: /<command> [args]
