@@ -53,8 +53,16 @@ public class CommandManager implements TabExecutor {
     public void RegisterCommands(){
         for(CommandRK command : getCommands()){
             try {
+                int registeredCommands = 0;
                 for(String aliases : command.getAliases()){
                     plugin.getCommand(aliases).setExecutor(this);
+
+                }
+                registeredCommands++;
+                if(registeredCommands!=commands.size()){
+                    plugin.getLogger().warning("Missing Commands!");
+                }else{
+                    plugin.getLogger().info("Commands Loaded!");
                 }
             }catch (Exception e){
                 plugin.getLogger().warning("Exception: " + e);
@@ -74,16 +82,19 @@ public class CommandManager implements TabExecutor {
                             for(String aliases : sub.getAliases()){
                                 if(args[0].equalsIgnoreCase(aliases)){
                                     sub.execute(sender, args);
+                                    return true;
                                 }
                             }
                         }
                     }else{
                         cm.execute(sender, args);
+                        return true;
                     }
                 }catch (Exception e){
+                    plugin.getLogger().warning(sender + "'s execution of " + command + " did not work!");
                     sender.sendMessage("§cSomething went wrong! Report to the Owner!");
                 }
-            }return true;
+            }
         }
         return false;
     }
