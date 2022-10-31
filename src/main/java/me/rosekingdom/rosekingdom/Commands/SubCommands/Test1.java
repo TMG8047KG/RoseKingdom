@@ -15,7 +15,7 @@ public class Test1 extends SubCommand {
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
-        sender.sendMessage("§cTest1 Success");
+        sender.sendMessage("§aTest1 Success");
         return true;
     }
 

@@ -29,6 +29,7 @@ public final class RoseKingdom extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new JoinLeaveListener(), this);
         getServer().getPluginManager().registerEvents(new Unplaceable_Hats(), this);
+        getServer().getPluginManager().registerEvents(new OnDead(), this);
 
         Medals.init();
         Bucket_Hats.init();

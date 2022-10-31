@@ -1,6 +1,7 @@
 package me.rosekingdom.rosekingdom.Handlers;
 
 import me.rosekingdom.rosekingdom.Commands.Coordinates_Share;
+import me.rosekingdom.rosekingdom.Commands.Heal;
 import me.rosekingdom.rosekingdom.Commands.SpawnEntity;
 import me.rosekingdom.rosekingdom.Commands.SubCommands.Test1;
 import me.rosekingdom.rosekingdom.Commands.SubCommands.Test2;
@@ -43,6 +44,7 @@ public class CommandManager implements TabExecutor {
         addCommand(new Coordinates_Share(plugin));
         addCommand(new SpawnEntity(plugin));
         addCommand(new sub(plugin));
+        addCommand(new Heal(plugin));
     }
 
     public void SubCommandList(){
@@ -51,24 +53,23 @@ public class CommandManager implements TabExecutor {
     }
 
     public void RegisterCommands(){
+        int registeredCommands = 0;
         for(CommandRK command : getCommands()){
             try {
-                int registeredCommands = 0;
                 for(String aliases : command.getAliases()){
                     plugin.getCommand(aliases).setExecutor(this);
 
                 }
                 registeredCommands++;
-                if(registeredCommands!=commands.size()){
-                    plugin.getLogger().warning("Missing Commands!");
-                }else{
-                    plugin.getLogger().info("Commands Loaded!");
-                }
             }catch (Exception e){
                 plugin.getLogger().warning("Exception: " + e);
                 plugin.getLogger().warning("Name of the command: " + command.getAliases() + ", " + command );
             }
-
+        }
+        if (registeredCommands == commands.size()) {
+            plugin.getLogger().info("Commands Loaded!");
+        } else {
+            plugin.getLogger().warning("Missing Commands!");
         }
     }
 

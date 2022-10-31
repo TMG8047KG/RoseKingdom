@@ -17,5 +17,8 @@ commands:
   spawnentity:
     description: Spawns entity's
   sub:
-    description: ebfhgthisdffo
+    description: test subcommand
     usage: /<command> [args]
+  heal:
+    description: Heals player
+    usage: /<command>
