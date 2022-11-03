@@ -1,7 +1,9 @@
 package me.rosekingdom.rosekingdom.Handlers;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import me.rosekingdom.rosekingdom.Handlers.CommandManager.Requirement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,7 @@ public abstract class CommandRK {
     protected JavaPlugin plugin;
     private ArrayList<String> aliases = new ArrayList<>();
     private ArrayList<String> subCommands = new ArrayList<>();
+    private ArrayList<Requirement> requirements = new ArrayList<>();
     private String syntax;
     private String description;
 
@@ -77,4 +80,36 @@ public abstract class CommandRK {
     public abstract boolean execute(CommandSender sender, String[] args);
 
     public abstract List<String> tabComplete(CommandSender sender, String[] args);
+
+    //--------------------
+
+    public ArrayList<Requirement> getRequirements() {
+        return requirements;
+    }
+
+    public void addRequirement(Requirement requirement) {
+        requirements.add(requirement);
+    }
+
+    public void setRequirements(ArrayList<Requirement> requirements) {
+        this.requirements = requirements;
+    }
+
+
+    public boolean hasRequirement(CommandSender sender, Requirement requirement){
+        switch (requirement) {
+            case PLAYER:
+                if (!(sender instanceof Player)) {
+                    return false;
+                }
+                break;
+            case OP:
+                if (!(sender instanceof Player)) {
+                    if (!sender.isOp()) {
+                        return false;
+                    }
+                }
+                break;
+        }return true;
+    }
 }

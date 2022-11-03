@@ -1,7 +1,5 @@
 package me.rosekingdom.rosekingdom;
 
-import me.rosekingdom.rosekingdom.Commands.Coordinates_Share;
-import me.rosekingdom.rosekingdom.Commands.SpawnEntity;
 import me.rosekingdom.rosekingdom.Handlers.CommandManager;
 import me.rosekingdom.rosekingdom.Listeners.*;
 import me.rosekingdom.rosekingdom.Materials.Items.Bucket_Hats;
@@ -26,6 +24,9 @@ public final class RoseKingdom extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         getLogger().info("[RoseKingdom] Loaded!");
+
+//        getConfig().options().copyDefaults(true);
+//        saveConfig();
 
         getServer().getPluginManager().registerEvents(new JoinLeaveListener(), this);
         getServer().getPluginManager().registerEvents(new Unplaceable_Hats(), this);

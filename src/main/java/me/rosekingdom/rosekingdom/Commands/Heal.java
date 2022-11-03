@@ -1,5 +1,6 @@
 package me.rosekingdom.rosekingdom.Commands;
 
+import me.rosekingdom.rosekingdom.Handlers.CommandManager.Requirement;
 import me.rosekingdom.rosekingdom.Handlers.CommandRK;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -12,6 +13,7 @@ public class Heal extends CommandRK {
     public Heal(JavaPlugin plugin){
         super(plugin);
         this.addAlias("heal");
+//        this.addRequirement(Requirement.OP);
     }
     @Override
     public boolean execute(CommandSender sender, String[] args) {

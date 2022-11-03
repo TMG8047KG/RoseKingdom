@@ -1,6 +1,5 @@
 package me.rosekingdom.rosekingdom.Listeners;
 
-import me.rosekingdom.rosekingdom.Materials.Items.InfoBook;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -10,7 +9,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class JoinLeaveListener implements Listener {
-    private int playerCount;
+
+    private int playerCount = Bukkit.getOnlinePlayers().size();
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e){
@@ -24,7 +24,7 @@ public class JoinLeaveListener implements Listener {
         if(!player.hasPlayedBefore()){
             e.setJoinMessage(ChatColor.GOLD + "Welcome " + player.getDisplayName() + " to the lands of Rose Kingdom");
             player.sendTitle(ChatColor.DARK_RED + "Rose" + ChatColor.GOLD + "Kingdom",ChatColor.GOLD + "Welcome to the Kingdom",20,80,20);
-            InfoBook.getBook(player);
+            //InfoBook.getBook(player);
         }
     }
 

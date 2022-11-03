@@ -114,4 +114,9 @@ public class CommandManager implements TabExecutor {
         }
         return null;
     }
+
+    //TODO find how to use permissions and how to make them
+//    public enum Requirement{
+//        PLAYER, DEFAULT, ADMIN, MODERATOR, HELPER, OP
+//    }
 }
