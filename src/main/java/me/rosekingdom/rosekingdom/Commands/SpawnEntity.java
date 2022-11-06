@@ -1,6 +1,6 @@
 package me.rosekingdom.rosekingdom.Commands;
 
-import me.rosekingdom.rosekingdom.Handlers.CommandRK;
+import me.rosekingdom.rosekingdom.Handlers.Commands.CommandRK;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -36,7 +36,7 @@ public class SpawnEntity extends CommandRK {
         if(args.length == 1) {
             List<String> Entities = new ArrayList<>();
             for (EntityType value : EntityType.values()) {
-                Entities.add(String.valueOf(value));
+                Entities.add(String.valueOf(value).toLowerCase());
             }
             return Entities;
         }

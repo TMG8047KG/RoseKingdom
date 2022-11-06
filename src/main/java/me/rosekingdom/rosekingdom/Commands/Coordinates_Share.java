@@ -1,6 +1,6 @@
 package me.rosekingdom.rosekingdom.Commands;
 
-import me.rosekingdom.rosekingdom.Handlers.CommandRK;
+import me.rosekingdom.rosekingdom.Handlers.Commands.CommandRK;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;

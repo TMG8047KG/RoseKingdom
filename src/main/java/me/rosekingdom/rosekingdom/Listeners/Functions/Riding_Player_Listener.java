@@ -1,4 +1,4 @@
-package me.rosekingdom.rosekingdom.Listeners;
+package me.rosekingdom.rosekingdom.Listeners.Functions;
 
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;

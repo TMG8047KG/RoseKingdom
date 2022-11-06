@@ -1,4 +1,4 @@
-package me.rosekingdom.rosekingdom.Handlers;
+package me.rosekingdom.rosekingdom.Handlers.Commands;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;

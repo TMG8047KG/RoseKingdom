@@ -22,3 +22,6 @@ commands:
   heal:
     description: Heals player
     usage: /<command>
+  home:
+    description: Opens home menu
+    usage: /<command> help

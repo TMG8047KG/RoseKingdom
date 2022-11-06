@@ -1,7 +1,10 @@
 package me.rosekingdom.rosekingdom;
 
-import me.rosekingdom.rosekingdom.Handlers.CommandManager;
-import me.rosekingdom.rosekingdom.Listeners.*;
+import me.rosekingdom.rosekingdom.Handlers.Commands.CommandManager;
+import me.rosekingdom.rosekingdom.Listeners.Events.JoinLeaveListener;
+import me.rosekingdom.rosekingdom.Listeners.Events.OnDead;
+import me.rosekingdom.rosekingdom.Listeners.Functions.Unplaceable_Hats;
+import me.rosekingdom.rosekingdom.Listeners.GUI.HomeMenuListener;
 import me.rosekingdom.rosekingdom.Materials.Items.Bucket_Hats;
 import me.rosekingdom.rosekingdom.Materials.Items.Mushroom_Hats;
 import me.rosekingdom.rosekingdom.Materials.Items.Medals;
@@ -31,6 +34,7 @@ public final class RoseKingdom extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new JoinLeaveListener(), this);
         getServer().getPluginManager().registerEvents(new Unplaceable_Hats(), this);
         getServer().getPluginManager().registerEvents(new OnDead(), this);
+        getServer().getPluginManager().registerEvents(new HomeMenuListener(), this);
 
         Medals.init();
         Bucket_Hats.init();

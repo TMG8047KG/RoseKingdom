@@ -1,7 +1,6 @@
 package me.rosekingdom.rosekingdom.Commands;
 
-import me.rosekingdom.rosekingdom.Handlers.CommandManager.Requirement;
-import me.rosekingdom.rosekingdom.Handlers.CommandRK;
+import me.rosekingdom.rosekingdom.Handlers.Commands.CommandRK;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -15,12 +14,19 @@ public class Heal extends CommandRK {
         this.addAlias("heal");
 //        this.addRequirement(Requirement.OP);
     }
+
     @Override
     public boolean execute(CommandSender sender, String[] args) {
         if(sender instanceof Player player){
-            player.setHealth(player.getMaxHealth());
+            if(player.isOp()){
+                player.setHealth(player.getMaxHealth());
+                player.setFoodLevel(20);
+                player.sendMessage("§aHealed!");
+            }else {
+                player.sendMessage("§cYou don't have permissions!");
+            }
         }else{
-            sender.sendMessage("This command can be executed only by players");
+            sender.sendMessage("§cOnly players can run this command!");
         }
         return false;
     }
