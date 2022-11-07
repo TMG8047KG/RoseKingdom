@@ -4,7 +4,8 @@ import me.rosekingdom.rosekingdom.Handlers.Commands.CommandManager;
 import me.rosekingdom.rosekingdom.Listeners.Events.JoinLeaveListener;
 import me.rosekingdom.rosekingdom.Listeners.Events.OnDead;
 import me.rosekingdom.rosekingdom.Listeners.Functions.Unplaceable_Hats;
-import me.rosekingdom.rosekingdom.Listeners.GUI.HomeMenuListener;
+import me.rosekingdom.rosekingdom.Listeners.GUI.Home.HomeMenuListener;
+import me.rosekingdom.rosekingdom.Listeners.GUI.Home.HomeSelectionMenuEvent;
 import me.rosekingdom.rosekingdom.Materials.Items.Bucket_Hats;
 import me.rosekingdom.rosekingdom.Materials.Items.Mushroom_Hats;
 import me.rosekingdom.rosekingdom.Materials.Items.Medals;
@@ -18,11 +19,6 @@ import java.io.IOException;
 
 
 public final class RoseKingdom extends JavaPlugin {
-
-    private File playersConfigFile;
-    private FileConfiguration playerConfig;
-    private String file = "playersData.yml";
-
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -35,38 +31,13 @@ public final class RoseKingdom extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Unplaceable_Hats(), this);
         getServer().getPluginManager().registerEvents(new OnDead(), this);
         getServer().getPluginManager().registerEvents(new HomeMenuListener(), this);
+        getServer().getPluginManager().registerEvents(new HomeSelectionMenuEvent(), this);
 
         Medals.init();
         Bucket_Hats.init();
         Mushroom_Hats.init();
 
-        //TODO
-        // Make a perPlayerDataSaver
-        //createPlayersConfigFile();
-
         new CommandManager(this);
-    }
-
-    public FileConfiguration getPlayerConfig(){
-        return this.playerConfig;
-    }
-
-    //TODO
-    // Finish this down here (perPlayerData file)
-    private void createPlayersConfigFile(){
-        playersConfigFile = new File(getDataFolder(), file);
-        if(!playersConfigFile.exists()){
-            playersConfigFile.getParentFile().mkdir();
-            saveResource(file, false);
-        }
-
-        playerConfig = new YamlConfiguration();
-        try {
-            playerConfig.load(playersConfigFile);
-        }catch (IOException | InvalidConfigurationException e){
-            e.printStackTrace();
-        }
-
     }
 
     @Override

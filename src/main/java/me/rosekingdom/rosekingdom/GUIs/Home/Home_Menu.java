@@ -1,4 +1,4 @@
-package me.rosekingdom.rosekingdom.GUIs;
+package me.rosekingdom.rosekingdom.GUIs.Home;
 
 import me.rosekingdom.rosekingdom.Handlers.PlayerData;
 import org.bukkit.Bukkit;
@@ -32,7 +32,7 @@ public class Home_Menu implements InventoryHolder {
         if(data.getConfig().get("home") == null){
             menu.setItem(4, item);
         }else{
-            item = createItem("Home: " + co.getString("home.coordinates"), Material.MAP, Arrays.asList("The coordinates of you're home", "Date of Creation: "+ co.getString("home.date")), 0);
+            item = createItem("Home: " + co.getString("home.coordinates"), Material.FILLED_MAP, Arrays.asList("The coordinates of you're home", "Date of Creation: "+ co.getString("home.date")), 0);
             menu.setItem(4, item);
         }
         int sp_x = player.getWorld().getSpawnLocation().getBlockX();
