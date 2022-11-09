@@ -27,7 +27,7 @@ public class PlayerData {
     }
 
     public boolean isEmpty(){
-        return !file.exists();
+        return getConfig().getKeys(true).size() == 0;
     }
 
     public FileConfiguration getConfig(){

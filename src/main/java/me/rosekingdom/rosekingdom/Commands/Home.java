@@ -10,7 +10,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class Home extends CommandRK {
 
@@ -27,24 +26,20 @@ public class Home extends CommandRK {
            sender.sendMessage("This command can be executed only by players!");
         }
         Player p = (Player) sender;
-        try{
-            if(args.length > 0){
-                PlayerData data = new PlayerData(p.getUniqueId());
-                FileConfiguration co = data.getConfig();
-                Set<String> locations = co.getConfigurationSection("locations").getKeys(false);
-                for(String location : locations){
-                    if(args[0].equals(co.getString("locations." + location + ".coordinates"))){
-                        p.sendMessage(co.getString("locations." + location) + ": " + co.getString("locations." + location + ".coordinates"));
-                        return true;
-                    }
+        PlayerData data = new PlayerData(p.getUniqueId());
+        FileConfiguration co = data.getConfig();
+
+        if(args.length > 0){
+            for(String location : co.getConfigurationSection("locations").getKeys(false)){
+                if(args[0].equals(location)){
+                    p.sendMessage("§6"+ location + ": §f" + co.getString("locations." + location + ".coordinates"));
+                    return true;
                 }
             }
-            Home_Menu gui = new Home_Menu(p);
-            p.openInventory(gui.getInventory());
-        }catch (Exception e){
-            sender.sendMessage("Error: " + e);
         }
 
+        Home_Menu gui = new Home_Menu(p);
+        p.openInventory(gui.getInventory());
 
         return false;
     }
@@ -58,10 +53,8 @@ public class Home extends CommandRK {
 
             Player p = (Player) sender;
             PlayerData data = new PlayerData(p.getUniqueId());
-            if(data.isEmpty()){
-                for(String location : data.getConfig().getConfigurationSection("locations").getKeys(false)){
-                    list.add(data.getConfig().get("locations." + location).toString());
-                }
+            if(!data.isEmpty()){
+                list.addAll(data.getConfig().getConfigurationSection("locations").getKeys(false));
             }
             return list;
         }

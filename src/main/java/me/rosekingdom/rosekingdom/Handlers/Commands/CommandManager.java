@@ -82,10 +82,9 @@ public class CommandManager implements TabExecutor {
                                 }
                             }
                         }
-                    }else{
-                        cm.execute(sender, args);
-                        return true;
                     }
+                    cm.execute(sender, args);
+                    return true;
                 }catch (Exception e){
                     plugin.getLogger().warning(sender.getName() + "'s execution of " + command + " did not work!");
                     sender.sendMessage("§cSomething went wrong! Report to the Owner!");
