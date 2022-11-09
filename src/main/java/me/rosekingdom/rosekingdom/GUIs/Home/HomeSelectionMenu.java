@@ -28,8 +28,6 @@ public class HomeSelectionMenu implements InventoryHolder {
         int y = player.getLocation().getBlockY();
         int z = player.getLocation().getBlockZ();
 
-
-
         ItemStack item;
         for(int k=0;k<=3; k++){
             item = createItem(Material.RED_STAINED_GLASS_PANE, "Deny" , Collections.singletonList("You don't agree to set this coordinates!"));

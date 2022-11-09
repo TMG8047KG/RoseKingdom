@@ -41,7 +41,6 @@ public class Home_Menu implements InventoryHolder {
             menu.setItem(s, item);
         }
 
-
         int sp_x = player.getWorld().getSpawnLocation().getBlockX();
         int sp_y = player.getWorld().getSpawnLocation().getBlockY();
         int sp_z = player.getWorld().getSpawnLocation().getBlockZ();
@@ -63,21 +62,24 @@ public class Home_Menu implements InventoryHolder {
         ),0);
         menu.setItem(13, item);
 
-        if(!data.isEmpty()){
-            for (String lc : co.getConfigurationSection("locations").getKeys(false)) {
-                item = createItem("§6"+co.getString("locations." + lc), Material.GRASS_BLOCK, Arrays.asList(
-                        "§7===============",
-                        "§6Coordinates:",
-                        "§f" + co.getString("locations." + lc + ".coordinates"),
-                        "§7---------------",
-                        "§6Date of Creation",
-                        "§2" + co.getString("locations." + lc + ".date"),
-                        "§7==============="
-                ), 0);
-                menu.addItem(item);
+        try{
+            if(!(data.isEmpty())){
+                for (String lc : co.getConfigurationSection("locations").getKeys(false)) {
+                    item = createItem("§6"+ lc, Material.GRASS_BLOCK, Arrays.asList(
+                            "§7===============",
+                            "§6Coordinates:",
+                            "§f" + co.getString("locations." + lc + ".coordinates"),
+                            "§7---------------",
+                            "§6Date of Creation",
+                            "§2" + co.getString("locations." + lc + ".date"),
+                            "§7==============="
+                    ), 0);
+                    menu.addItem(item);
+                }
             }
+        }catch (Exception e){
+            player.sendMessage("Error: " + e);
         }
-
     }
 
 
