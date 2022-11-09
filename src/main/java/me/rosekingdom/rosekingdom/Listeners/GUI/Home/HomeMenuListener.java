@@ -20,8 +20,9 @@ public class HomeMenuListener implements Listener {
             if(e.getCurrentItem() == null){
                 return;
             }
-            if (e.getSlot() == 4 && e.getCurrentItem().getType().equals(Material.WRITABLE_BOOK)){
-                HomeSelectionMenu sel = new HomeSelectionMenu(player);
+            if (e.getSlot() == 13){
+                HomeSelectionMenu sel = new HomeSelectionMenu();
+                sel.setup(player);
                 player.openInventory(sel.getInventory());
             }
 

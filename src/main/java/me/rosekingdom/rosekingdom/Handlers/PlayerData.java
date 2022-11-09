@@ -26,6 +26,10 @@ public class PlayerData {
         }
     }
 
+    public boolean isEmpty(){
+        return !file.exists();
+    }
+
     public FileConfiguration getConfig(){
         return configFile;
     }

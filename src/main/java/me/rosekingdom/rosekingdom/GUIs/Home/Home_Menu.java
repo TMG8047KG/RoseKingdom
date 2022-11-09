@@ -11,7 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class Home_Menu implements InventoryHolder {
@@ -21,27 +20,66 @@ public class Home_Menu implements InventoryHolder {
 
     public Home_Menu(Player player) {
         menu = Bukkit.createInventory(this, 36, "Home Menu");
-        init(player);
+        setup(player);
     }
 
-    private void init(Player player) {
+    private void setup(Player player) {
         PlayerData data = new PlayerData(player.getUniqueId());
         FileConfiguration co = data.getConfig();
+
         ItemStack item;
-        item = createItem("Set Home", Material.WRITABLE_BOOK, Collections.singletonList("Test"), 0);
-        if(data.getConfig().get("home") == null){
-            menu.setItem(4, item);
-        }else{
-            item = createItem("Home: " + co.getString("home.coordinates"), Material.FILLED_MAP, Arrays.asList("The coordinates of you're home", "Date of Creation: "+ co.getString("home.date")), 0);
-            menu.setItem(4, item);
+
+        int[] border = {0, 1, 2, 3, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35};
+        for (int br : border) {
+            item = createItem(null, Material.GRAY_STAINED_GLASS_PANE, null, 0);
+            menu.setItem(br, item);
         }
+
+        int[] soon = {10,11,12,14,15,16};
+        for (int s : soon) {
+            item = createItem("§cSOON", Material.ORANGE_STAINED_GLASS_PANE, null, 0);
+            menu.setItem(s, item);
+        }
+
+
         int sp_x = player.getWorld().getSpawnLocation().getBlockX();
         int sp_y = player.getWorld().getSpawnLocation().getBlockY();
         int sp_z = player.getWorld().getSpawnLocation().getBlockZ();
 
-        item = createItem("Spawn: " + sp_x + " " + sp_y + " " + sp_z, Material.FILLED_MAP, null, 0);
-        menu.setItem(2,item);
+        item = createItem("§dSpawn", Material.POPPY, Arrays.asList(
+                "§7===============",
+                "§6Coordinates:",
+                "§f" + sp_x + " " + sp_y + " " + sp_z,
+                "§7---------------",
+                "§7Overworld Spawn Coordinates",
+                "§7==============="
+        ), 0);
+        menu.setItem(4, item);
+
+        item = createItem("§6Create new location", Material.WRITABLE_BOOK, Arrays.asList(
+                "§7===============",
+                "§aAdds new location coordinates to the list",
+                "§7==============="
+        ),0);
+        menu.setItem(13, item);
+
+        if(!data.isEmpty()){
+            for (String lc : co.getConfigurationSection("locations").getKeys(false)) {
+                item = createItem("§6"+co.getString("locations." + lc), Material.GRASS_BLOCK, Arrays.asList(
+                        "§7===============",
+                        "§6Coordinates:",
+                        "§f" + co.getString("locations." + lc + ".coordinates"),
+                        "§7---------------",
+                        "§6Date of Creation",
+                        "§2" + co.getString("locations." + lc + ".date"),
+                        "§7==============="
+                ), 0);
+                menu.addItem(item);
+            }
+        }
+
     }
+
 
     private ItemStack createItem(String name, Material material, List<String> lore, int CMD){
         ItemStack item = new ItemStack(material, 1);

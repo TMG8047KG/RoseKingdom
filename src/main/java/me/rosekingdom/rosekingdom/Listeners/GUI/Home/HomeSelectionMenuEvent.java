@@ -36,8 +36,8 @@ public class HomeSelectionMenuEvent implements Listener {
                 return;
             }
             if(e.getCurrentItem().getType().equals(Material.GREEN_STAINED_GLASS_PANE)){
-                pcd.set("home.coordinates", x + " " + y + " " + z);
-                pcd.set("home.date", LocalDate.now().toString());
+                pcd.set("locations.home.coordinates", x + " " + y + " " + z);
+                pcd.set("locations.home.date", LocalDate.now().toString());
                 pData.save();
                 //TODO remove
                 player.sendMessage("§aAgreed");
