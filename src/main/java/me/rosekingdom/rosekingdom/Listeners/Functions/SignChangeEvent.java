@@ -1,4 +1,20 @@
 package me.rosekingdom.rosekingdom.Listeners.Functions;
 
-public class SignChangeEvent {
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Sign;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEvent;
+
+public class SignChangeEvent implements Listener {
+
+    @EventHandler
+    public void onSignClick(PlayerInteractEvent e){
+        if(e.getPlayer().isSneaking()){
+            if(e.getClickedBlock().getState() instanceof Sign sign){
+                e.getPlayer().openSign(sign);
+            }
+        }
+    }
 }

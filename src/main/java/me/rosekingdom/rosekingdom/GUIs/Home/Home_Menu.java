@@ -19,7 +19,7 @@ public class Home_Menu implements InventoryHolder {
     private Inventory menu;
 
     public Home_Menu(Player player) {
-        menu = Bukkit.createInventory(this, 36, "Home Menu");
+        menu = Bukkit.createInventory(this, 45, "Home Menu");
         setup(player);
     }
 
@@ -29,7 +29,7 @@ public class Home_Menu implements InventoryHolder {
 
         ItemStack item;
 
-        int[] border = {0, 1, 2, 3, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35};
+        int[] border = {0, 1, 2, 3, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35,36,37,38,39,40,41,42,43,44};
         for (int br : border) {
             item = createItem(null, Material.GRAY_STAINED_GLASS_PANE, null, 0);
             menu.setItem(br, item);

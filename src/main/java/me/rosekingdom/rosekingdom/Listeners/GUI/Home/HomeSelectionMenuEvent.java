@@ -3,7 +3,9 @@ package me.rosekingdom.rosekingdom.Listeners.GUI.Home;
 import me.rosekingdom.rosekingdom.GUIs.Home.HomeSelectionMenu;
 import me.rosekingdom.rosekingdom.GUIs.Home.Home_Menu;
 import me.rosekingdom.rosekingdom.Handlers.PlayerData;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,12 +38,24 @@ public class HomeSelectionMenuEvent implements Listener {
                 return;
             }
             if(e.getCurrentItem().getType().equals(Material.GREEN_STAINED_GLASS_PANE)){
-                pcd.set("locations.home.coordinates", x + " " + y + " " + z);
-                pcd.set("locations.home.date", LocalDate.now().toString());
-                pData.save();
+                Location bl = new Location(player.getWorld(), 10000000, 255, 10000000);
+                bl.getBlock().setType(Material.DIRT);
+                Location sl = new Location(player.getWorld(), 10000000, 256, 10000000);
+                if(sl.getBlock().getState() instanceof Sign sign){
+                    player.closeInventory();
+                    sign.setLine(1,"Name");
+                    sign.setLine(2,"==========");
+                    sign.setLine(4,"^^^^^^^^^^");
+                    sign.update();
+
+                    player.openSign(sign);
+                }
+//                pcd.set("locations.home.coordinates", x + " " + y + " " + z);
+//                pcd.set("locations.home.date", LocalDate.now().toString());
+//                pData.save();
                 //TODO remove
-                player.sendMessage("§aAgreed");
-                player.closeInventory();
+//                player.sendMessage("§aAgreed");
+//                player.closeInventory();
             }
             if(e.getCurrentItem().getType().equals(Material.RED_STAINED_GLASS_PANE)){
                 //TODO remove

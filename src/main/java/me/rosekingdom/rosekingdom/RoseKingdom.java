@@ -3,6 +3,7 @@ package me.rosekingdom.rosekingdom;
 import me.rosekingdom.rosekingdom.Handlers.Commands.CommandManager;
 import me.rosekingdom.rosekingdom.Listeners.Events.JoinLeaveListener;
 import me.rosekingdom.rosekingdom.Listeners.Events.OnDead;
+import me.rosekingdom.rosekingdom.Listeners.Functions.SignChangeEvent;
 import me.rosekingdom.rosekingdom.Listeners.Functions.Unplaceable_Hats;
 import me.rosekingdom.rosekingdom.Listeners.GUI.Home.HomeMenuListener;
 import me.rosekingdom.rosekingdom.Listeners.GUI.Home.HomeSelectionMenuEvent;
@@ -32,6 +33,7 @@ public final class RoseKingdom extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new OnDead(), this);
         getServer().getPluginManager().registerEvents(new HomeMenuListener(), this);
         getServer().getPluginManager().registerEvents(new HomeSelectionMenuEvent(), this);
+        getServer().getPluginManager().registerEvents(new SignChangeEvent(), this);
 
         Medals.init();
         Bucket_Hats.init();
