@@ -23,7 +23,7 @@ public class HomeMenuListener implements Listener {
 
             if(e.getCurrentItem() == null){
                 return;
-            }else{
+            }else if(!pData.isEmpty()){
                 for (String name : fc.getConfigurationSection("locations").getKeys(false)) {
                     if(e.getCurrentItem().getItemMeta().getDisplayName().equals("§6"+name)){
                         player.sendMessage("§6\"" + name + "\"'s coordinates: §f" + fc.getString("locations."+name+".coordinates"));

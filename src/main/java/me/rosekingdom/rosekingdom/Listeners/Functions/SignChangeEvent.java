@@ -1,7 +1,5 @@
 package me.rosekingdom.rosekingdom.Listeners.Functions;
 
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

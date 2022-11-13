@@ -10,14 +10,8 @@ import me.rosekingdom.rosekingdom.Listeners.GUI.Home.HomeSelectionMenuEvent;
 import me.rosekingdom.rosekingdom.Materials.Items.Bucket_Hats;
 import me.rosekingdom.rosekingdom.Materials.Items.Mushroom_Hats;
 import me.rosekingdom.rosekingdom.Materials.Items.Medals;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
+
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
-import java.io.IOException;
-
 
 public final class RoseKingdom extends JavaPlugin {
     @Override
