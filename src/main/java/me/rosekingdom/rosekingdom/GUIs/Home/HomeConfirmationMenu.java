@@ -1,9 +1,8 @@
 package me.rosekingdom.rosekingdom.GUIs.Home;
 
-import me.rosekingdom.rosekingdom.Handlers.PlayerData;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -15,12 +14,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class HomeSelectionMenu implements InventoryHolder {
+public class HomeConfirmationMenu implements InventoryHolder {
 
     private Inventory menu;
 
-    public HomeSelectionMenu(){
-        menu = Bukkit.createInventory(this, 9, "Are you sure you want to proceed");
+    public HomeConfirmationMenu(){
+        menu = Bukkit.createInventory(this, 9, Component.text("Are you sure you want to proceed"));
     }
 
     public void setup(Player player){

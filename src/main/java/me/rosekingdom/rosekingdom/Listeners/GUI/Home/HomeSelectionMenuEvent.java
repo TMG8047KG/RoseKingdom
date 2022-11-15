@@ -1,9 +1,9 @@
 package me.rosekingdom.rosekingdom.Listeners.GUI.Home;
 
-import me.rosekingdom.rosekingdom.GUIs.Home.HomeSelectionMenu;
+import me.rosekingdom.rosekingdom.GUIs.Home.HomeConfirmationMenu;
+import me.rosekingdom.rosekingdom.GUIs.Home.HomeTypeSelectionMenu;
 import me.rosekingdom.rosekingdom.GUIs.Home.Home_Menu;
 import me.rosekingdom.rosekingdom.Handlers.PlayerData;
-
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Location;
@@ -17,11 +17,6 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 
-import java.time.LocalDate;
-
-import static org.bukkit.Bukkit.getLogger;
-
-
 public class HomeSelectionMenuEvent implements Listener {
 
     @EventHandler
@@ -29,7 +24,7 @@ public class HomeSelectionMenuEvent implements Listener {
         if(e.getClickedInventory() == null){
             return;
         }
-        if(e.getClickedInventory().getHolder() instanceof HomeSelectionMenu){
+        if(e.getClickedInventory().getHolder() instanceof HomeConfirmationMenu){
             e.setCancelled(true);
             Player player = (Player) e.getWhoClicked();
 
@@ -42,7 +37,7 @@ public class HomeSelectionMenuEvent implements Listener {
             player.getWorld().setBlockData(location, Material.SPRUCE_SIGN.createBlockData());
             Sign sign = (Sign) player.getWorld().getBlockAt(location).getState();
             setSign(sign);
-            getLogger().info(sign.lines().toString());
+            //getLogger().info(sign.lines().toString());
 
             if(e.getCurrentItem() == null){
                 return;
@@ -51,8 +46,6 @@ public class HomeSelectionMenuEvent implements Listener {
                 player.openSign(sign);
             }
             if(e.getCurrentItem().getType().equals(Material.RED_STAINED_GLASS_PANE)){
-                //TODO remove
-                player.sendMessage("§cDenied");
                 deleteSign(player, location);
                 player.openInventory(menu.getInventory());
             }
@@ -98,10 +91,12 @@ public class HomeSelectionMenuEvent implements Listener {
                         }
                     }
                 }
-                pcd.set("locations." + name + ".coordinates", x + " " + y + " " + z);
-                pcd.set("locations." + name + ".date", LocalDate.now().toString());
-                pData.save();
-                player.sendMessage("§aSuccessfully created new location \""+ name + "\"");
+//                pcd.set("locations." + name + ".coordinates", x + " " + y + " " + z);
+//                pcd.set("locations." + name + ".date", LocalDate.now().toString());
+//                pData.save();
+//                player.sendMessage("§aSuccessfully created new location \""+ name + "\"");
+                HomeTypeSelectionMenu menu = new HomeTypeSelectionMenu();
+                player.openInventory(menu.getInventory());
             }else {
                 player.sendMessage("§cPlease enter valid name!");
             }

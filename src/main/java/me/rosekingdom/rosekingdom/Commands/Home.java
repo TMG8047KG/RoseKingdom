@@ -16,6 +16,7 @@ public class Home extends CommandRK {
     public Home(JavaPlugin plugin){
         super(plugin);
         this.addAlias("home");
+        this.addAlias("h");
         this.addSubCommand("help");
         this.addSubCommand("reset");
     }

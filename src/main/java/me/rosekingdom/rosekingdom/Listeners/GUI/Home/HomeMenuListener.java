@@ -1,6 +1,6 @@
 package me.rosekingdom.rosekingdom.Listeners.GUI.Home;
 
-import me.rosekingdom.rosekingdom.GUIs.Home.HomeSelectionMenu;
+import me.rosekingdom.rosekingdom.GUIs.Home.HomeConfirmationMenu;
 import me.rosekingdom.rosekingdom.GUIs.Home.Home_Menu;
 import me.rosekingdom.rosekingdom.Handlers.PlayerData;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -33,11 +33,14 @@ public class HomeMenuListener implements Listener {
             }
 
             if (e.getSlot() == 13){
-                HomeSelectionMenu sel = new HomeSelectionMenu();
+                HomeConfirmationMenu sel = new HomeConfirmationMenu();
                 sel.setup(player);
                 player.openInventory(sel.getInventory());
             }
 
+            if(e.getSlot() == 40){
+                player.closeInventory();
+            }
             e.setCancelled(true);
         }
     }

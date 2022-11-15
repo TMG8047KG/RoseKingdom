@@ -16,12 +16,11 @@ commands:
       - crd
   spawnentity:
     description: Spawns entity's
-  sub:
-    description: test subcommand
-    usage: /<command> [args]
   heal:
     description: Heals player
     usage: /<command>
   home:
     description: Opens home menu
+    aliases:
+      - h
     usage: /<command> help

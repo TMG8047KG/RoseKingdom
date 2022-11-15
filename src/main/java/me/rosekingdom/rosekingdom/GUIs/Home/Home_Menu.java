@@ -1,6 +1,7 @@
 package me.rosekingdom.rosekingdom.GUIs.Home;
 
 import me.rosekingdom.rosekingdom.Handlers.PlayerData;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -9,6 +10,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +21,7 @@ public class Home_Menu implements InventoryHolder {
     private Inventory menu;
 
     public Home_Menu(Player player) {
-        menu = Bukkit.createInventory(this, 45, "Home Menu");
+        menu = Bukkit.createInventory(this, 45, Component.text("Home Menu"));
         setup(player);
     }
 
@@ -29,7 +31,7 @@ public class Home_Menu implements InventoryHolder {
 
         ItemStack item;
 
-        int[] border = {0, 1, 2, 3, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35,36,37,38,39,40,41,42,43,44};
+        int[] border = {0, 1, 2, 3, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35,36,37,38,39,41,42,43,44};
         for (int br : border) {
             item = createItem(null, Material.GRAY_STAINED_GLASS_PANE, null, 0);
             menu.setItem(br, item);
@@ -80,6 +82,9 @@ public class Home_Menu implements InventoryHolder {
         }catch (Exception e){
             player.sendMessage("Error: " + e);
         }
+
+        item = createItem("§cClose", Material.BARRIER, null, 0);
+        menu.setItem(40, item);
     }
 
 
@@ -96,7 +101,7 @@ public class Home_Menu implements InventoryHolder {
     }
 
     @Override
-    public Inventory getInventory() {
+    public @NotNull Inventory getInventory() {
         return menu;
     }
 }
