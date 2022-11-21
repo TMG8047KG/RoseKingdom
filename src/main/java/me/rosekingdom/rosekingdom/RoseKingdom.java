@@ -1,16 +1,17 @@
 package me.rosekingdom.rosekingdom;
 
+import me.rosekingdom.rosekingdom.Events.JoinLeaveListener;
+import me.rosekingdom.rosekingdom.Events.OnDead;
 import me.rosekingdom.rosekingdom.Handlers.Commands.CommandManager;
-import me.rosekingdom.rosekingdom.Listeners.Events.JoinLeaveListener;
-import me.rosekingdom.rosekingdom.Listeners.Events.OnDead;
 import me.rosekingdom.rosekingdom.Listeners.Functions.SignChangeEvent;
 import me.rosekingdom.rosekingdom.Listeners.Functions.Unplaceable_Hats;
+import me.rosekingdom.rosekingdom.Listeners.GUI.Home.HomeConfirmationEvent;
 import me.rosekingdom.rosekingdom.Listeners.GUI.Home.HomeMenuListener;
-import me.rosekingdom.rosekingdom.Listeners.GUI.Home.HomeSelectionMenuEvent;
+import me.rosekingdom.rosekingdom.Listeners.GUI.Home.HomeSettingsListener;
+import me.rosekingdom.rosekingdom.Listeners.GUI.Home.HomeTypeSelectionEvent;
 import me.rosekingdom.rosekingdom.Materials.Items.Bucket_Hats;
-import me.rosekingdom.rosekingdom.Materials.Items.Mushroom_Hats;
 import me.rosekingdom.rosekingdom.Materials.Items.Medals;
-
+import me.rosekingdom.rosekingdom.Materials.Items.Mushroom_Hats;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class RoseKingdom extends JavaPlugin {
@@ -26,8 +27,10 @@ public final class RoseKingdom extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Unplaceable_Hats(), this);
         getServer().getPluginManager().registerEvents(new OnDead(), this);
         getServer().getPluginManager().registerEvents(new HomeMenuListener(), this);
-        getServer().getPluginManager().registerEvents(new HomeSelectionMenuEvent(), this);
+        getServer().getPluginManager().registerEvents(new HomeConfirmationEvent(), this);
         getServer().getPluginManager().registerEvents(new SignChangeEvent(), this);
+        getServer().getPluginManager().registerEvents(new HomeTypeSelectionEvent(), this);
+        getServer().getPluginManager().registerEvents(new HomeSettingsListener(), this);
 
         Medals.init();
         Bucket_Hats.init();

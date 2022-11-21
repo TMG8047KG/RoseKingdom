@@ -1,7 +1,7 @@
 package me.rosekingdom.rosekingdom.Commands.SubCommands;
 
 import me.rosekingdom.rosekingdom.Handlers.Commands.SubCommand;
-import me.rosekingdom.rosekingdom.Handlers.PlayerData;
+import me.rosekingdom.rosekingdom.utils.PlayerData;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;

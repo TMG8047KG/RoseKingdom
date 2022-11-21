@@ -1,6 +1,6 @@
-package me.rosekingdom.rosekingdom.Listeners.Events;
+package me.rosekingdom.rosekingdom.Events;
 
-import me.rosekingdom.rosekingdom.Handlers.PlayerData;
+import me.rosekingdom.rosekingdom.utils.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

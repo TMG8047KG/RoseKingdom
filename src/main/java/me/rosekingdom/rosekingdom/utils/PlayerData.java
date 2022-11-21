@@ -1,4 +1,4 @@
-package me.rosekingdom.rosekingdom.Handlers;
+package me.rosekingdom.rosekingdom.utils;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -23,6 +23,7 @@ public class PlayerData {
             file.createNewFile();
         }catch (IOException e){
             e.printStackTrace();
+            throw new SecurityException(e);
         }
     }
 

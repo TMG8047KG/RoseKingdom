@@ -1,4 +1,4 @@
-package me.rosekingdom.rosekingdom.Listeners.Events;
+package me.rosekingdom.rosekingdom.Events;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

@@ -1,6 +1,7 @@
 package me.rosekingdom.rosekingdom.GUIs.Home;
 
-import me.rosekingdom.rosekingdom.Handlers.PlayerData;
+import me.rosekingdom.rosekingdom.utils.ItemCreator;
+import me.rosekingdom.rosekingdom.utils.PlayerData;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -9,16 +10,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class Home_Menu implements InventoryHolder {
 
 
-    private Inventory menu;
+    private final Inventory menu;
 
     public Home_Menu(Player player) {
         menu = Bukkit.createInventory(this, 45, Component.text("Home Menu"));
@@ -26,6 +25,7 @@ public class Home_Menu implements InventoryHolder {
     }
 
     private void setup(Player player) {
+        ItemCreator creator = new ItemCreator();
         PlayerData data = new PlayerData(player.getUniqueId());
         FileConfiguration co = data.getConfig();
 
@@ -33,13 +33,13 @@ public class Home_Menu implements InventoryHolder {
 
         int[] border = {0, 1, 2, 3, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35,36,37,38,39,41,42,43,44};
         for (int br : border) {
-            item = createItem(null, Material.GRAY_STAINED_GLASS_PANE, null, 0);
+            item = creator.createItem(Material.GRAY_STAINED_GLASS_PANE);
             menu.setItem(br, item);
         }
 
         int[] soon = {10,11,12,14,15,16};
         for (int s : soon) {
-            item = createItem("§cSOON", Material.ORANGE_STAINED_GLASS_PANE, null, 0);
+            item = creator.createItem(Component.text("§cSOON"), Material.ORANGE_STAINED_GLASS_PANE);
             menu.setItem(s, item);
         }
 
@@ -47,27 +47,28 @@ public class Home_Menu implements InventoryHolder {
         int sp_y = player.getWorld().getSpawnLocation().getBlockY();
         int sp_z = player.getWorld().getSpawnLocation().getBlockZ();
 
-        item = createItem("§dSpawn", Material.POPPY, Arrays.asList(
+        item = creator.createItem("§dSpawn", Material.POPPY, Arrays.asList(
                 "§7===============",
                 "§6Coordinates:",
                 "§f" + sp_x + " " + sp_y + " " + sp_z,
                 "§7---------------",
                 "§7Overworld Spawn Coordinates",
                 "§7==============="
-        ), 0);
+        ));
         menu.setItem(4, item);
 
-        item = createItem("§6Create new location", Material.WRITABLE_BOOK, Arrays.asList(
+        item = creator.createItem("§6Create new location", Material.WRITABLE_BOOK, Arrays.asList(
                 "§7===============",
                 "§aAdds new location coordinates to the list",
                 "§7==============="
-        ),0);
+        ));
         menu.setItem(13, item);
 
         try{
             if(!(data.isEmpty())){
                 for (String lc : co.getConfigurationSection("locations").getKeys(false)) {
-                    item = createItem("§6"+ lc, Material.GRASS_BLOCK, Arrays.asList(
+                    String url = co.getString("locations." + lc + ".item");
+                    item = creator.createItem(Component.text("§6"+ lc), url, Material.GRASS_BLOCK, Arrays.asList(
                             "§7===============",
                             "§6Coordinates:",
                             "§f" + co.getString("locations." + lc + ".coordinates"),
@@ -75,29 +76,16 @@ public class Home_Menu implements InventoryHolder {
                             "§6Date of Creation",
                             "§2" + co.getString("locations." + lc + ".date"),
                             "§7==============="
-                    ), 0);
+                    ));
                     menu.addItem(item);
                 }
             }
-        }catch (Exception e){
+        }catch (NullPointerException e){
             player.sendMessage("Error: " + e);
         }
 
-        item = createItem("§cClose", Material.BARRIER, null, 0);
+        item = creator.createItem(Component.text("§cClose"),  Material.BARRIER);
         menu.setItem(40, item);
-    }
-
-
-    private ItemStack createItem(String name, Material material, List<String> lore, int CMD){
-        ItemStack item = new ItemStack(material, 1);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(name);
-        meta.setLore(lore);
-        if(CMD != 0){
-            meta.setCustomModelData(CMD);
-        }
-        item.setItemMeta(meta);
-        return item;
     }
 
     @Override

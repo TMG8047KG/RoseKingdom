@@ -3,7 +3,7 @@ package me.rosekingdom.rosekingdom.Listeners.GUI.Home;
 import me.rosekingdom.rosekingdom.GUIs.Home.HomeConfirmationMenu;
 import me.rosekingdom.rosekingdom.GUIs.Home.HomeTypeSelectionMenu;
 import me.rosekingdom.rosekingdom.GUIs.Home.Home_Menu;
-import me.rosekingdom.rosekingdom.Handlers.PlayerData;
+import me.rosekingdom.rosekingdom.utils.PlayerData;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Location;
@@ -17,7 +17,9 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 
-public class HomeSelectionMenuEvent implements Listener {
+public class HomeConfirmationEvent implements Listener {
+
+    public String name;
 
     @EventHandler
     public void onClick(InventoryClickEvent e){
@@ -31,24 +33,27 @@ public class HomeSelectionMenuEvent implements Listener {
             Home_Menu menu = new Home_Menu(player);
 
             int x = player.getLocation().getBlockX();
+            int y = player.getLocation().getBlockY();
             int z = player.getLocation().getBlockZ();
 
-            Location location = new Location(player.getWorld(), x, -64, z);
-            player.getWorld().setBlockData(location, Material.SPRUCE_SIGN.createBlockData());
-            Sign sign = (Sign) player.getWorld().getBlockAt(location).getState();
-            setSign(sign);
-            //getLogger().info(sign.lines().toString());
-
-            if(e.getCurrentItem() == null){
-                return;
-            }
-            if(e.getCurrentItem().getType().equals(Material.GREEN_STAINED_GLASS_PANE)){
-                player.openSign(sign);
-            }
-            if(e.getCurrentItem().getType().equals(Material.RED_STAINED_GLASS_PANE)){
-                deleteSign(player, location);
-                player.openInventory(menu.getInventory());
-            }
+//            if((e.getSlot()==3) && e.getCurrentItem().displayName().equals(Component.text(x+ " " + y + " " + z))) {
+//                Location location = new Location(player.getWorld(), x, -64, z);
+//                player.getWorld().setBlockData(location, Material.SPRUCE_SIGN.createBlockData());
+//                Sign sign = (Sign) player.getWorld().getBlockAt(location).getState();
+//                setSign(sign);
+//                //getLogger().info(sign.lines().toString());
+//
+//                if (e.getCurrentItem() == null) {
+//                    return;
+//                }
+//                if (e.getCurrentItem().getType().equals(Material.GREEN_STAINED_GLASS_PANE)) {
+//                    player.openSign(sign);
+//                }
+//                if (e.getCurrentItem().getType().equals(Material.RED_STAINED_GLASS_PANE)) {
+//                    deleteSign(player, location);
+//                    player.openInventory(menu.getInventory());
+//                }
+//            }
         }
     }
 
@@ -74,13 +79,14 @@ public class HomeSelectionMenuEvent implements Listener {
         FileConfiguration pcd = pData.getConfig();
 
         int x = player.getLocation().getBlockX();
-        int y = player.getLocation().getBlockY();
+
         int z = player.getLocation().getBlockZ();
         Location location = new Location(player.getWorld(), x, -64, z);
 
         if(location.getBlock().equals(event.getBlock())){
             TextComponent text = (TextComponent) event.line(0);
-            String name = text.content();
+            name = text.content();
+            name = name.replaceAll(" ", "_");
 
             if(!name.isEmpty()){
                 if(!pData.isEmpty()){
@@ -91,10 +97,8 @@ public class HomeSelectionMenuEvent implements Listener {
                         }
                     }
                 }
-//                pcd.set("locations." + name + ".coordinates", x + " " + y + " " + z);
-//                pcd.set("locations." + name + ".date", LocalDate.now().toString());
-//                pData.save();
-//                player.sendMessage("§aSuccessfully created new location \""+ name + "\"");
+                pcd.set("temp",name);
+                pData.save();
                 HomeTypeSelectionMenu menu = new HomeTypeSelectionMenu();
                 player.openInventory(menu.getInventory());
             }else {
