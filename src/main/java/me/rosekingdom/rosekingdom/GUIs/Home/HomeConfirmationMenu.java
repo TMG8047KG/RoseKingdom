@@ -17,8 +17,9 @@ public class HomeConfirmationMenu implements InventoryHolder {
 
     private Inventory menu;
 
-    public HomeConfirmationMenu(){
+    public HomeConfirmationMenu(TextComponent name, List<Component> lore){
         menu = Bukkit.createInventory(this, 9, Component.text("Are you sure you want to proceed"));
+        setup(name, lore);
     }
 
     public void setup(TextComponent name, List<Component> lore){

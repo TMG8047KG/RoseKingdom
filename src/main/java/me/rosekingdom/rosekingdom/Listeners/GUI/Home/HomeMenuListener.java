@@ -53,14 +53,14 @@ public class HomeMenuListener implements Listener {
             }
 
             if (e.getSlot() == 13){
-                HomeConfirmationMenu sel = new HomeConfirmationMenu();
+
                 int x = player.getLocation().getBlockX();
                 int y = player.getLocation().getBlockY();
                 int z = player.getLocation().getBlockZ();
 
                 List<Component> lore = new ArrayList<>();
                 lore.add(Component.text("Are you sure you want to set this coordinates?", TextColor.fromHexString("#0d9e2a")));
-                sel.setup(Component.text(x + " " + y + " " + z), lore);
+                HomeConfirmationMenu sel = new HomeConfirmationMenu(Component.text(x + " " + y + " " + z), lore);
                 player.openInventory(sel.getInventory());
             }
 

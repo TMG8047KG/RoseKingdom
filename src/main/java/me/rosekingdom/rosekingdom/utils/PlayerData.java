@@ -43,6 +43,10 @@ public class PlayerData {
         }
     }
 
+    public boolean hasKey(String name){
+        return configFile.contains(name);
+    }
+
     public void reset(){
         file.delete();
         createPlayerConfig();

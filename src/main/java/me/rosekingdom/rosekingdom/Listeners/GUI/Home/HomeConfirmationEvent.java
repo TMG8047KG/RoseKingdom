@@ -30,30 +30,32 @@ public class HomeConfirmationEvent implements Listener {
             e.setCancelled(true);
             Player player = (Player) e.getWhoClicked();
 
+            PlayerData pData = new PlayerData(player.getUniqueId());
             Home_Menu menu = new Home_Menu(player);
 
             int x = player.getLocation().getBlockX();
             int y = player.getLocation().getBlockY();
             int z = player.getLocation().getBlockZ();
 
-//            if((e.getSlot()==3) && e.getCurrentItem().displayName().equals(Component.text(x+ " " + y + " " + z))) {
-//                Location location = new Location(player.getWorld(), x, -64, z);
-//                player.getWorld().setBlockData(location, Material.SPRUCE_SIGN.createBlockData());
-//                Sign sign = (Sign) player.getWorld().getBlockAt(location).getState();
-//                setSign(sign);
-//                //getLogger().info(sign.lines().toString());
-//
-//                if (e.getCurrentItem() == null) {
-//                    return;
-//                }
-//                if (e.getCurrentItem().getType().equals(Material.GREEN_STAINED_GLASS_PANE)) {
-//                    player.openSign(sign);
-//                }
-//                if (e.getCurrentItem().getType().equals(Material.RED_STAINED_GLASS_PANE)) {
-//                    deleteSign(player, location);
-//                    player.openInventory(menu.getInventory());
-//                }
-//            }
+            if(!pData.hasKey("temp")) {
+                Location location = new Location(player.getWorld(), x, -64, z);
+                player.getWorld().setBlockData(location, Material.SPRUCE_SIGN.createBlockData());
+                Sign sign = (Sign) player.getWorld().getBlockAt(location).getState();
+                setSign(sign);
+                //getLogger().info(sign.lines().toString());
+
+                if (e.getCurrentItem() == null) {
+                    return;
+                }
+                if (e.getCurrentItem().getType().equals(Material.GREEN_STAINED_GLASS_PANE)) {
+                    player.closeInventory();
+                    player.openSign(sign);
+                }
+                if (e.getCurrentItem().getType().equals(Material.RED_STAINED_GLASS_PANE)) {
+                    deleteSign(player, location);
+                    player.openInventory(menu.getInventory());
+                }
+            }
         }
     }
 

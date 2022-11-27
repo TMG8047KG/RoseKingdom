@@ -22,12 +22,20 @@ public class HomeSettingsListener implements Listener {
 
     @EventHandler
     public void onClose(InventoryCloseEvent e){
-        if(e.getInventory().getHolder() instanceof HomeSettingsMenu){
-            PlayerData pData = new PlayerData(e.getPlayer().getUniqueId());
-            FileConfiguration co = pData.getConfig();
-            if((e.getInventory().getHolder() instanceof HomeConfirmationMenu)){
+        PlayerData pData = new PlayerData(e.getPlayer().getUniqueId());
+        FileConfiguration co = pData.getConfig();
+        if(e.getReason().equals(InventoryCloseEvent.Reason.PLUGIN)) return;
+        if(e.getInventory().getHolder() instanceof HomeConfirmationMenu){
+            if((pData.hasKey("temp")) || (pData.hasKey("delete"))){
                 co.set("temp", null);
+                co.set("delete", null);
+                pData.save();
+                e.getPlayer().sendMessage("Canceled deletion!");
+                return;
             }
+        }
+        if (e.getInventory().getHolder() instanceof HomeSettingsMenu){
+            co.set("temp", null);
             pData.save();
         }
     }
@@ -67,27 +75,37 @@ public class HomeSettingsListener implements Listener {
                 pData.save();
             }
             if(e.getSlot() == 16){
-                HomeConfirmationMenu menu = new HomeConfirmationMenu();
+                co.set("delete", co.getString("temp"));
+                pData.save();
                 List<Component> lore = new ArrayList<>();
                 lore.add(Component.text("Are you sure you want to delete this location", TextColor.fromHexString("#d62000")));
-                menu.setup(Component.text("Deletion", TextColor.fromHexString("#bf0000")), lore);
+                HomeConfirmationMenu menu = new HomeConfirmationMenu(Component.text("Deletion", TextColor.fromHexString("#bf0000")), lore);
+                player.closeInventory();
                 player.openInventory(menu.getInventory());
             }
             e.setCancelled(true);
         }
 
         if(e.getClickedInventory().getHolder() instanceof HomeConfirmationMenu){
-            if((e.getInventory().getItem(3).displayName().equals(Component.text("Deletion", TextColor.fromHexString("#bf0000"))))){
+            if (pData.hasKey("delete")) {
                 if (e.getCurrentItem() == null) {
                     return;
                 }
                 if (e.getCurrentItem().getType().equals(Material.GREEN_STAINED_GLASS_PANE)) {
+                    player.sendMessage("Deleted");
                     co.set("locations." + co.getString("temp"), null);
                     co.set("temp", null);
+                    co.set("delete", null);
                     pData.save();
+                    player.closeInventory();
                 }
                 if (e.getCurrentItem().getType().equals(Material.RED_STAINED_GLASS_PANE)) {
+                    player.sendMessage("Canceled");
+                    co.set("delete", null);
+                    pData.save();
+
                     HomeSettingsMenu settings = new HomeSettingsMenu(player, co.getString("temp"));
+                    player.closeInventory();
                     player.openInventory(settings.getInventory());
                 }
             }
