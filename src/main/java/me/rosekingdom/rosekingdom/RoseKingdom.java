@@ -14,6 +14,8 @@ import me.rosekingdom.rosekingdom.Materials.Items.Medals;
 import me.rosekingdom.rosekingdom.Materials.Items.Mushroom_Hats;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+
 public final class RoseKingdom extends JavaPlugin {
     @Override
     public void onEnable() {
@@ -22,6 +24,14 @@ public final class RoseKingdom extends JavaPlugin {
 
 //        getConfig().options().copyDefaults(true);
 //        saveConfig();
+
+        try {
+            File dir = new File("plugins/RoseKingdom/PlayerData");
+            dir.mkdirs();
+        }catch (SecurityException e){
+            e.printStackTrace();
+        }
+
 
         getServer().getPluginManager().registerEvents(new JoinLeaveListener(), this);
         getServer().getPluginManager().registerEvents(new Unplaceable_Hats(), this);

@@ -48,7 +48,11 @@ public class PlayerData {
     }
 
     public void reset(){
-        file.delete();
-        createPlayerConfig();
+        try {
+            file.delete();
+            createPlayerConfig();
+        }catch (SecurityException e){
+            e.printStackTrace();
+        }
     }
 }

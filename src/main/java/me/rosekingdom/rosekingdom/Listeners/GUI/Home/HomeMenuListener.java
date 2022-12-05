@@ -5,6 +5,7 @@ import me.rosekingdom.rosekingdom.GUIs.Home.HomeSettingsMenu;
 import me.rosekingdom.rosekingdom.GUIs.Home.Home_Menu;
 import me.rosekingdom.rosekingdom.utils.PlayerData;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -23,32 +24,30 @@ public class HomeMenuListener implements Listener {
         if(e.getClickedInventory() == null){
             return;
         }
+        if(e.getCurrentItem() == null){
+            return;
+        }
         if(e.getClickedInventory().getHolder() instanceof Home_Menu){
             PlayerData pData = new PlayerData(player.getUniqueId());
             FileConfiguration fc = pData.getConfig();
 
-            if(e.getClick().isRightClick()){
-                try{
+            if(!pData.isEmpty()){
+                TextComponent displayName = (TextComponent) e.getCurrentItem().getItemMeta().displayName();
+                if (e.getClick().isRightClick()) {
                     for (String name : fc.getConfigurationSection("locations").getKeys(false)) {
-                        if(e.getCurrentItem().getItemMeta().getDisplayName().equals("§6"+name)){
+                        if (displayName != null && displayName.content().equals(name)) {
                             HomeSettingsMenu settings = new HomeSettingsMenu(player, name);
                             player.openInventory(settings.getInventory());
                         }
                     }
-                }catch(Exception ex){
-                    ex.printStackTrace();
                 }
-            }
-            if(e.getClick().isLeftClick()){
-                try{
+                if (e.getClick().isLeftClick()) {
                     for (String name : fc.getConfigurationSection("locations").getKeys(false)) {
-                        if(e.getCurrentItem().getItemMeta().getDisplayName().equals("§6"+name)){
-                            player.sendMessage("§6\"" + name + "\"'s coordinates: §f" + fc.getString("locations."+name+".coordinates"));
+                        if (displayName != null && displayName.content().equals(name)) {
+                            player.sendMessage("§6\"" + name + "\"'s coordinates: §f" + fc.getString("locations." + name + ".coordinates"));
                             player.closeInventory();
                         }
                     }
-                }catch(Exception ex){
-                    ex.printStackTrace();
                 }
             }
 

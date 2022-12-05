@@ -49,27 +49,34 @@ public class HomeSettingsMenu implements InventoryHolder {
         if(!co.getBoolean("locations." + name + ".public")){
             List<Component> lore = new ArrayList<>();
             lore.add(Component.text("When private no one except you can see this location", TextColor.color(135, 214, 79)));
-            lore.add(Component.text("====================================", TextColor.color(77, 77, 77)));
-            lore.add(Component.text("Left click this to make it public", TextColor.fromHexString("#707070")));
+            lore.add(Component.text("====================================", TextColor.fromHexString("#454545")));
+            lore.add(Component.text("Click this to make it public", TextColor.fromHexString("#707070")));
             item = creator.createItem(Component.text("Private"), Material.RED_CONCRETE, lore);
         }else{
             List<Component> lore = new ArrayList<>();
             lore.add(Component.text("When public everyone can see this location", TextColor.color(135, 214, 79)));
-            lore.add(Component.text("====================================", TextColor.color(77, 77, 77)));
-            lore.add(Component.text("Left click this to make it private", TextColor.fromHexString("#707070")));
+            lore.add(Component.text("====================================", TextColor.fromHexString("#454545")));
+            lore.add(Component.text("Click this to make it private", TextColor.fromHexString("#707070")));
             item = creator.createItem(Component.text("Public"), Material.GREEN_CONCRETE, lore);
         }
         menu.setItem(10, item);
 
-        item = creator.createItem(Component.text("Rename"), Material.NAME_TAG);
+        List<Component> rlore = new ArrayList<>();
+        rlore.add(Component.text("Coming Soon!", TextColor.fromHexString("#ff8d29")));
+        item = creator.createItem(Component.text("Rename"), Material.NAME_TAG, rlore);
         menu.setItem(12, item);
 
-        item = creator.createItem(Component.text("Reset Coordinates"), Material.MAP);
+        List<Component> clore = new ArrayList<>();
+        clore.add(Component.text("Changes the coordinates of this location", TextColor.fromHexString("#fa9f2f")));
+        clore.add(Component.text("to the block you are currently standing", TextColor.fromHexString("#fa9f2f")));
+        clore.add(Component.text("====================================", TextColor.fromHexString("#454545")));
+        clore.add(Component.text("Click to change!", TextColor.fromHexString("#707070")));
+        item = creator.createItem(Component.text("Reset Coordinates", TextColor.fromHexString("#48fac2")), Material.MAP, clore);
         menu.setItem(14, item);
 
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text("Deletes this location!", TextColor.fromHexString("#9e0000")));
-        lore.add(Component.text("====================================",TextColor.fromHexString("#4a4a4a")));
+        lore.add(Component.text("====================================",TextColor.fromHexString("#454545")));
         lore.add(Component.text("Location name: ", TextColor.fromHexString("#d9a90d"))
                 .append(Component.text(name, TextColor.fromHexString("#fff4cc"))));
         lore.add(Component.text("Location coordinates:", TextColor.fromHexString("#d9a90d"))

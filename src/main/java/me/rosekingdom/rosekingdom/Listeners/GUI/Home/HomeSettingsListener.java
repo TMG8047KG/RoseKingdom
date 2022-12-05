@@ -45,6 +45,11 @@ public class HomeSettingsListener implements Listener {
         Player player = (Player) e.getWhoClicked();
         PlayerData pData = new PlayerData(player.getUniqueId());
         FileConfiguration co = pData.getConfig();
+
+        int x = player.getLocation().getBlockX();
+        int y = player.getLocation().getBlockY();
+        int z = player.getLocation().getBlockZ();
+
         if(e.getClickedInventory() == null){
             return;
         }
@@ -74,6 +79,19 @@ public class HomeSettingsListener implements Listener {
                 e.getCurrentItem().setType(item.getType());
                 pData.save();
             }
+
+//            if(e.getSlot() == 12){
+//                return;
+//            }
+
+            if(e.getSlot() == 14){
+                List<Component> lore = new ArrayList<>();
+                lore.add(Component.text("Are you sure you want to change to this coordinates"));
+                HomeConfirmationMenu menu = new HomeConfirmationMenu(Component.text(x + " " + y + " " + z), lore);
+                player.closeInventory();
+                player.openInventory(menu.getInventory());
+            }
+
             if(e.getSlot() == 16){
                 co.set("delete", co.getString("temp"));
                 pData.save();
@@ -102,6 +120,23 @@ public class HomeSettingsListener implements Listener {
                 if (e.getCurrentItem().getType().equals(Material.RED_STAINED_GLASS_PANE)) {
                     player.sendMessage("Canceled");
                     co.set("delete", null);
+                    pData.save();
+
+                    HomeSettingsMenu settings = new HomeSettingsMenu(player, co.getString("temp"));
+                    player.closeInventory();
+                    player.openInventory(settings.getInventory());
+                }
+            }
+            if(pData.hasKey("temp")){
+                if (e.getCurrentItem().getType().equals(Material.GREEN_STAINED_GLASS_PANE)) {
+                    player.sendMessage("Changed");
+                    co.set("locations." + co.getString("temp") + ".coordinates", x + " " + y + " " + z);
+                    co.set("temp", null);
+                    pData.save();
+                    player.closeInventory();
+                }
+                if (e.getCurrentItem().getType().equals(Material.RED_STAINED_GLASS_PANE)) {
+                    player.sendMessage("Canceled");
                     pData.save();
 
                     HomeSettingsMenu settings = new HomeSettingsMenu(player, co.getString("temp"));

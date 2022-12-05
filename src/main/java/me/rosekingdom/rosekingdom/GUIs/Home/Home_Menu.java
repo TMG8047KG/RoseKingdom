@@ -3,6 +3,7 @@ package me.rosekingdom.rosekingdom.GUIs.Home;
 import me.rosekingdom.rosekingdom.utils.ItemCreator;
 import me.rosekingdom.rosekingdom.utils.PlayerData;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -68,7 +69,7 @@ public class Home_Menu implements InventoryHolder {
             if(!(data.isEmpty())){
                 for (String lc : co.getConfigurationSection("locations").getKeys(false)) {
                     String url = co.getString("locations." + lc + ".item");
-                    item = creator.createItem(Component.text("§6"+ lc), url, Material.GRASS_BLOCK, Arrays.asList(
+                    item = creator.createItem(Component.text(lc, TextColor.fromHexString("#e8b80c")), url, Material.GRASS_BLOCK, Arrays.asList(
                             "§7===============",
                             "§6Coordinates:",
                             "§f" + co.getString("locations." + lc + ".coordinates"),
