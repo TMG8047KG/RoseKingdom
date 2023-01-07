@@ -24,3 +24,5 @@ commands:
     aliases:
       - h
     usage: /<command> help
+  test:
+    description: Test

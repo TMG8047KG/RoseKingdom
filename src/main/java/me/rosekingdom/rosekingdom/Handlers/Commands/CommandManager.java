@@ -5,6 +5,7 @@ import me.rosekingdom.rosekingdom.Commands.SubCommands.home_reset;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class CommandManager implements TabExecutor {
         addCommand(new SpawnEntity(plugin));
         addCommand(new Heal(plugin));
         addCommand(new Home(plugin));
+        addCommand(new test(plugin));
     }
 
     public void SubCommandList(){
