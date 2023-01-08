@@ -3,20 +3,26 @@ version: '${project.version}'
 main: me.rosekingdom.rosekingdom.RoseKingdom
 api-version: 1.19
 prefix: RK
-authors: [ TMG8047KG ]
+author: TMG8047KG
 description: Plugin made for the Rose Kingdom Server
 
 commands:
-  temp_bm:
-    description: Gives you a bronze medal
-    usage: /<command>
-  coords:
+  cords:
     description: Sends your coordinates to a selected Player
-    usage: /<command>
+    usage: /<command> <Player>
     aliases:
       - cd
-      - xy
       - xyz
       - crd
   spawnentity:
     description: Spawns entity's
+  heal:
+    description: Heals player
+    usage: /<command>
+  home:
+    description: Opens home menu
+    aliases:
+      - h
+    usage: /<command> help
+  test:
+    description: Test

@@ -1,37 +1,52 @@
 package me.rosekingdom.rosekingdom;
 
-import me.rosekingdom.rosekingdom.Commands.Coordinates_Share;
-import me.rosekingdom.rosekingdom.Commands.SpawnEntity;
+import me.rosekingdom.rosekingdom.Events.JoinLeaveListener;
+import me.rosekingdom.rosekingdom.Events.OnDead;
+import me.rosekingdom.rosekingdom.Handlers.Commands.CommandManager;
+import me.rosekingdom.rosekingdom.Listeners.Functions.SignChangeEvent;
+import me.rosekingdom.rosekingdom.Listeners.Functions.Unplaceable_Hats;
+import me.rosekingdom.rosekingdom.Listeners.GUI.Home.HomeConfirmationEvent;
+import me.rosekingdom.rosekingdom.Listeners.GUI.Home.HomeMenuListener;
+import me.rosekingdom.rosekingdom.Listeners.GUI.Home.HomeSettingsListener;
+import me.rosekingdom.rosekingdom.Listeners.GUI.Home.HomeTypeSelectionEvent;
 import me.rosekingdom.rosekingdom.Materials.Items.Bucket_Hats;
-import me.rosekingdom.rosekingdom.Materials.Items.Mushroom_Hats;
-import me.rosekingdom.rosekingdom.Listeners.JoinLeaveListener;
 import me.rosekingdom.rosekingdom.Materials.Items.Medals;
-import me.rosekingdom.rosekingdom.Listeners.Riding_Player_Listener;
-import me.rosekingdom.rosekingdom.Listeners.Unplaceable_Hats;
+import me.rosekingdom.rosekingdom.Materials.Items.Mushroom_Hats;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 
 public final class RoseKingdom extends JavaPlugin {
-
     @Override
     public void onEnable() {
         // Plugin startup logic
         getLogger().info("[RoseKingdom] Loaded!");
+
+//        getConfig().options().copyDefaults(true);
+//        saveConfig();
+
+        try {
+            File dir = new File("plugins/RoseKingdom/PlayerData");
+            dir.mkdirs();
+        }catch (SecurityException e){
+            e.printStackTrace();
+        }
+
+
         getServer().getPluginManager().registerEvents(new JoinLeaveListener(), this);
         getServer().getPluginManager().registerEvents(new Unplaceable_Hats(), this);
-        getServer().getPluginManager().registerEvents(new Riding_Player_Listener(), this);
-        //getServer().getPluginManager().registerEvents(new Sign_Rewrite(), this);
+        getServer().getPluginManager().registerEvents(new OnDead(), this);
+        getServer().getPluginManager().registerEvents(new HomeMenuListener(), this);
+        getServer().getPluginManager().registerEvents(new HomeConfirmationEvent(), this);
+        getServer().getPluginManager().registerEvents(new SignChangeEvent(), this);
+        getServer().getPluginManager().registerEvents(new HomeTypeSelectionEvent(), this);
+        getServer().getPluginManager().registerEvents(new HomeSettingsListener(), this);
 
         Medals.init();
         Bucket_Hats.init();
         Mushroom_Hats.init();
-        Commands();
-        //new CommandManager(this);
-    }
 
-    public void Commands(){
-        getCommand("coords").setExecutor(new Coordinates_Share());
-        getCommand("spawnentity").setExecutor(new SpawnEntity());
+        new CommandManager(this);
     }
 
     @Override
