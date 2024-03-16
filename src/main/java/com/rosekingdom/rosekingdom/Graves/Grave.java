@@ -7,6 +7,7 @@ import com.rosekingdom.rosekingdom.RoseKingdom;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
@@ -58,12 +59,14 @@ public class Grave {
     public void setupGrave(){
         Location loc = player.getLocation();
         loc = new Location(player.getWorld(), loc.getBlockX()+0.5, loc.getBlockY(), loc.getBlockZ()+0.5, player.getBodyYaw(), 0);
+        if(loc.getWorld().getEnvironment().equals(World.Environment.THE_END) && loc.getBlockY() < 0){
+            loc.setY(0);
+        }
         createGrave(loc);
         showPlayerGrave(player);
         graveId = DeathStatement.insert(player, loc, display.getUniqueId(), interaction.getUniqueId());
         GraveStatement.insertInventory(id, graveId, player);
         timer(3600);
-
     }
     @SuppressWarnings("Experimental")
     private void createGrave(Location loc){
@@ -99,6 +102,7 @@ public class Grave {
             time--;
             if(time <= 0){
                 removeGrave(id, graveId);
+                scheduler.cancelTask(task);
             }
         }, 0, 20);
     }
