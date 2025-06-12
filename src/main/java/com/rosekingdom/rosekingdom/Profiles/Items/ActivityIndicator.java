@@ -1,6 +1,8 @@
 package com.rosekingdom.rosekingdom.Profiles.Items;
 
 import com.rosekingdom.rosekingdom.Core.Utils.MillisToTime;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -9,12 +11,13 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+@SuppressWarnings("UnstableApiUsage")
 public class ActivityIndicator extends ItemStack {
     public ActivityIndicator(OfflinePlayer player){
         super(Material.PAPER);
         setAmount(1);
+        setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().addString("pf_activity_status"));
         ItemMeta meta = getItemMeta();
-        meta.setCustomModelData(2101);
         if(player.isOnline()){
             meta.displayName(Component.text("Currently Online", TextColor.fromHexString("#17fc32"))
                     .decoration(TextDecoration.ITALIC, false));

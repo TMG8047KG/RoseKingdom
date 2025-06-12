@@ -16,12 +16,12 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ClientInformation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -29,6 +29,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.UUID;
 
 public class NPC {
@@ -39,13 +40,11 @@ public class NPC {
     private boolean onTabList = false;
     private boolean shown = true;
 
-
     MinecraftServer server;
     ServerLevel level;
     private String texture;
     private String signature;
     private ServerPlayer npc;
-
 
     public NPC(String name, Location location) {
         //Server and World
@@ -122,31 +121,46 @@ public class NPC {
         NPCHandler.addNPC(this);
     }
 
-
     public void spawn() {
         //Second skin layer
         SynchedEntityData synchedEntityData = npc.getEntityData();
         synchedEntityData.set(new EntityDataAccessor<>(17, EntityDataSerializers.BYTE), (byte) 127);
 
-        for(Player online : Bukkit.getOnlinePlayers()) {
-            setValue(npc, "c", ((CraftPlayer) online).getHandle().connection);
+        for(org.bukkit.entity.Player online : Bukkit.getOnlinePlayers()) {
+            setValue(npc, "connection", ((CraftPlayer) online).getHandle().connection);
+
+            //Updated for newer versions - use EnumSet for actions
+            EnumSet<ClientboundPlayerInfoUpdatePacket.Action> addActions = EnumSet.of(
+                    ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER,
+                    ClientboundPlayerInfoUpdatePacket.Action.UPDATE_GAME_MODE,
+                    ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LISTED,
+                    ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LATENCY,
+                    ClientboundPlayerInfoUpdatePacket.Action.UPDATE_DISPLAY_NAME
+            );
+
             //Spawns the NPC
-            sendPacket(new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, npc), online);
+            sendPacket(new ClientboundPlayerInfoUpdatePacket(addActions, Collections.singleton(npc)), online);
+
             if(onTabList){
                 //Adds it to the tablist
-                sendPacket(new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LISTED, npc), online);
+                EnumSet<ClientboundPlayerInfoUpdatePacket.Action> listActions = EnumSet.of(
+                        ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LISTED
+                );
+                sendPacket(new ClientboundPlayerInfoUpdatePacket(listActions, Collections.singleton(npc)), online);
             }
+
             if(shown){
                 //Shows the NPC
                 sendPacket(new ClientboundAddEntityPacket(npc, 0, npc.blockPosition()), online);
             }
+
             //Adds the second skin layer
             sendPacket(new ClientboundSetEntityDataPacket(npc.getId(), synchedEntityData.getNonDefaultValues()), online);
         }
     }
 
     public void despawn(){
-        for(Player online : Bukkit.getOnlinePlayers()){
+        for(org.bukkit.entity.Player online : Bukkit.getOnlinePlayers()){
             setRotation(false);
             sendPacket(new ClientboundRemoveEntitiesPacket(npc.getId()), online);
             sendPacket(new ClientboundPlayerInfoRemovePacket(Collections.singletonList(npc.getUUID())), online);
@@ -157,21 +171,29 @@ public class NPC {
         SynchedEntityData synchedEntityData = npc.getEntityData();
         synchedEntityData.set(new EntityDataAccessor<>(17, EntityDataSerializers.BYTE), (byte) 127);
 
-        for(Player online : Bukkit.getOnlinePlayers()) {
-            setValue(npc, "c", ((CraftPlayer) online).getHandle().connection);
-            sendPacket(new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, npc), online);
-            sendPacket(new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LISTED, npc), online);
+        for(org.bukkit.entity.Player online : Bukkit.getOnlinePlayers()) {
+            setValue(npc, "connection", ((CraftPlayer) online).getHandle().connection);
+
+            EnumSet<ClientboundPlayerInfoUpdatePacket.Action> addActions = EnumSet.of(
+                    ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER,
+                    ClientboundPlayerInfoUpdatePacket.Action.UPDATE_GAME_MODE,
+                    ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LISTED,
+                    ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LATENCY,
+                    ClientboundPlayerInfoUpdatePacket.Action.UPDATE_DISPLAY_NAME
+            );
+
+            sendPacket(new ClientboundPlayerInfoUpdatePacket(addActions, Collections.singleton(npc)), online);
             sendPacket(new ClientboundSetEntityDataPacket(npc.getId(), synchedEntityData.getNonDefaultValues()), online);
         }
         onTabList = true;
         shown = false;
     }
 
-    private void sendPacket(Packet<?> packet, Player player) {
+    private void sendPacket(Packet<?> packet, org.bukkit.entity.Player player) {
         ((CraftPlayer) player).getHandle().connection.send(packet);
     }
 
-    //Not sure what this does yet
+    //Updated field name for newer versions
     private void setValue(Object packet, String fieldName, Object value) {
         try {
             Field field = packet.getClass().getDeclaredField(fieldName);
@@ -185,7 +207,7 @@ public class NPC {
     public void setRotation(Boolean enable){
         if(enable){
             task = Bukkit.getScheduler().scheduleSyncRepeatingTask(JavaPlugin.getPlugin(RoseKingdom.class), () -> {
-                for(Player p : Bukkit.getOnlinePlayers()) {
+                for(org.bukkit.entity.Player p : Bukkit.getOnlinePlayers()) {
                     if(calculateDistance(p, npc) > 5) {
                         sendPacket(new ClientboundRotateHeadPacket(npc, (byte) location.getYaw()), p);
                         sendPacket(new ClientboundMoveEntityPacket.Rot(npc.getId(), (byte) location.getYaw(), (byte) location.getPitch(), true), p);
@@ -205,7 +227,7 @@ public class NPC {
         }
     }
 
-    private double calculateDistance(Player p, ServerPlayer npc) {
+    private double calculateDistance(org.bukkit.entity.Player p, ServerPlayer npc) {
         double diffX = npc.getX() - p.getLocation().getX(), diffZ = npc.getZ() - p.getLocation().getZ();
         double x = diffX < 0 ? (diffX * -1) : diffX, z = diffZ < 0 ? (diffZ * -1) : diffZ;
         return Math.sqrt(Math.pow(x, 2) + Math.pow(z, 2));
@@ -213,7 +235,7 @@ public class NPC {
 
     private String[] getSkin(String name) {
         try {
-            // gets UUID from name
+            // Updated API endpoints for newer versions
             URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + name);
             InputStreamReader reader = new InputStreamReader(url.openStream());
             String uuid = JsonParser.parseReader(reader).getAsJsonObject().get("id").getAsString();
@@ -226,17 +248,14 @@ public class NPC {
             String signature = property.get("signature").getAsString();
             return new String[] {texture, signature};
         } catch (IOException | IllegalStateException exception) {
-           Message.Console("The player " + name + " does not exist.");
+            Message.Console("The player " + name + " does not exist.");
             String texture = "ewogICJ0aW1lc3RhbXAiIDogMTY0MDUxODU2Njk1NiwKICAicHJvZmlsZUlkIiA6ICJlYzU2MTUzOGYzZmQ0NjFkYWZmNTA4NmIyMjE1NGJjZSIsCiAgInByb2ZpbGVOYW1lIiA6ICJBbGV4IiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzFhNGFmNzE4NDU1ZDRhYWI1MjhlN2E2MWY4NmZhMjVlNmEzNjlkMTc2OGRjYjEzZjdkZjMxOWE3MTNlYjgxMGIiCiAgICB9CiAgfQp9";
             String signature = "BchUKARlsKuXPJA7qXd2QKgnj3jR+F2EYHG5gwl4QW/+nK8Mb7MLKJDcKbKdxGRgCFfi7perJrDXZ8TpNrGxLgI+ocmjonH+ebwqv5NuRbGD0+Pkc1HCp0mq1dXnRPVgxFrlB+1pTSOnsYRJSJbLdIDvxbwL3RgQIkpKOFT7+Tpdx0VXEoHp2HCWtteAtjh1kEReHTJmnKwAzWmOU5j3Ro8e7xcuOOEG5p9CTbZyk2xxBDNHOJMq7jhPCMModKz15JdGm02r7k1al8GzdO9g0yx6GD8RlpzH0j1Ol+BHCnQ80TcrBvEOc9xgNN9q68Z2kVU7elNbXPHZYFsxalbpvwaHelDgTmx71NYfDzIqqvOY0s37kJsndWuY2bRhqNhJBFZi/SOvXFZHHhQcARGxBsizc5LKfIG3UqYHhuAJ/beErRvZLUM8hCgd5w8ISZNzPdM5pMGfe7ckaEWRRjhb7CmFHVZ9RQ+cHXGnUdSsrsDCT/gwZLIt8gHSIncE3H5m9zauhRmY2KYUZVVMKkbPB1TRfUbZdVWbEjJA7w4SXdyCN0Byh37pQl0ONvXtc5/eNRyuGHlkQj5qh/26zm/x4sawA+/7F4xfWiCib55DMLHFyXP3ooQIPmbwz+u4zLPnXymwJZG894ObapMlc1hWPmb2SbN28ZOuU1R67JwUqaI=";
             return new String[] {texture, signature};
         }
-        //gray box
-        //texture: ewogICJ0aW1lc3RhbXAiIDogMTcxMDg4NDQwNTE2MCwKICAicHJvZmlsZUlkIiA6ICI5ZDE1OGM1YjNiN2U0ZGNlOWU0OTA5MTdjNmJlYmM5MSIsCiAgInByb2ZpbGVOYW1lIiA6ICJTbm9uX1NTIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzYyM2NmYWY0MjZiNTZhZmVjM2VmOWUxYjg4ZGVhZjU5YzlkYWMwMDU4ZDNiOTE4Nzk1MzgwNzFjNjRkODVkMWEiCiAgICB9CiAgfQp9
-        //signature: nKIof7pfbAUmqs+uRtNSvWa0M2/ZuPNqHWEzpk8JKe5vvrnyWtM+Udw2ehEM8Lvpzf/2x+AGc+DIJGXOiMJfIaGEiZUjONHXjhouA6mDcCx+kRNZZTmIT6pLF0s1Uni801v56yAPJSKgQ7vhZOmODRZgkHbLVoXG1oVWMan1vUiv573ISQ2/MF6huOgh/3hbUZU0JhOGv/NMjPaDDnYwLDkAMMqYWPeWX4xULZ+bs9KidMDgXI4WquD2uqaXgSbfkhWPySxSC2VYAxgHrGPiCwGPh5dp6YPnzD1/k1Om4XCNxhvUPPXr25yqKuN354/U4GlApBdMiEJK+9WsruK0agiahr1ARcEGlgiS7LwK39nr7Z7nKQz9NxHUhDEW9K719x5CAXqpt9R4ihmROq+rnU1xWBNViUjzszdNdyEaEyPtpVTAjghd0Erop7qK9mNkl1akiZtWReYPjMFZy9uPuKp2zLaJo9iYzNUKtZgz43VtxrPHjCmfPg4hy1PZ7I+OdcW6nTJMZidle9NA/xaExjl9/w0vTzU1LXJ5Jeo6B09Pq/ebOBK152t4VjSx8/28/l3G8l4NPZiqonk8BM4k2NHcI1Ma8OO9jVUoFhcNN0M2NfSUsg4HlCsglp6FqPqxWOLniEna5yCl4ker+ljEOMsDw+WvRGTJ9vKEQXTHD88=
-
     }
 
+    // Getters and setters remain the same
     public void setOnTabList(boolean value){
         onTabList = value;
     }
@@ -256,21 +275,26 @@ public class NPC {
     public String getName(){
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
         GameProfile profile = new GameProfile(UUID.randomUUID(), name);
         profile.getProperties().put("textures", new Property("textures", texture, signature));
         npc = new ServerPlayer(server, level, profile, ClientInformation.createDefault());
     }
+
     public Location getLocation(){
         return location;
     }
+
     public ServerPlayer getNPC(){
         return npc;
     }
+
     public boolean isOnTabList(){
         return onTabList;
     }
+
     public boolean isShown() {
         return shown;
     }

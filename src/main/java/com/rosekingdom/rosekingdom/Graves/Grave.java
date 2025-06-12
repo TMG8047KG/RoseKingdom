@@ -4,6 +4,8 @@ import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
 import com.rosekingdom.rosekingdom.Graves.Statements.GraveStatement;
 import com.rosekingdom.rosekingdom.RoseKingdom;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -60,13 +62,12 @@ public class Grave {
 
     }
 
+    @SuppressWarnings("UnstableApiUsage")
     private void createGrave(Location loc){
         //Grave
         display = (ItemDisplay) loc.getWorld().spawnEntity(loc.toCenterLocation(), EntityType.ITEM_DISPLAY);
         ItemStack item = new ItemStack(Material.PAPER);
-        ItemMeta meta = item.getItemMeta();
-        meta.setCustomModelData(5);
-        item.setItemMeta(meta);
+        item.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().addString("tombstone"));
         display.setItemStack(item);
         display.setRotation(loc.getYaw(), 0);
 

@@ -7,6 +7,8 @@ import com.rosekingdom.rosekingdom.Profiles.Items.ActivityIndicator;
 import com.rosekingdom.rosekingdom.Profiles.Items.ProfilePlayTime;
 import com.rosekingdom.rosekingdom.Profiles.Items.StreakScore;
 import com.rosekingdom.rosekingdom.RoseKingdom;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -31,6 +33,7 @@ public class UserGUI extends InventoryGUI {
         return Bukkit.createInventory(null, 3*9, Component.text("\u00A7f\uDAFF\uDFF8\uEFB0"));
     }
 
+    @SuppressWarnings("UnstableApiUsage")
     @Override
     public void decorate(Player player) {
         int[] playerHead = {0,1,2,9,10,11,18,19,20};
@@ -43,9 +46,9 @@ public class UserGUI extends InventoryGUI {
         profile.update().thenAcceptAsync(
                 updatedProfile -> {
                     var head = ItemStack.of(Material.PLAYER_HEAD);
+                    head.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().addString("profile"));
                     var meta = (SkullMeta) head.getItemMeta();
                     meta.displayName(Component.text(player.getName(), TextColor.fromHexString("#9c9c9c")).decoration(TextDecoration.ITALIC, false));
-                    meta.setCustomModelData(2000);
                     meta.setPlayerProfile(updatedProfile);
                     head.setItemMeta(meta);
                     this.addButton(10, createButton(head));

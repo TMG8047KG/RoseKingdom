@@ -2,6 +2,8 @@ package com.rosekingdom.rosekingdom.Profiles.Items;
 
 import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
 import com.rosekingdom.rosekingdom.Core.Utils.MillisToTime;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -15,6 +17,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 
+@SuppressWarnings("UnstableApiUsage")
 public class ProfilePlayTime extends ItemStack {
     public ProfilePlayTime(OfflinePlayer player){
         super(Material.PAPER);
@@ -26,8 +29,8 @@ public class ProfilePlayTime extends ItemStack {
         String time = String.format("Total time spent on the server: %s.", MillisToTime.withSymbol(rawTime));
         String joinDate = String.format("First joined on %s %s (UTC).", date.substring(0, 10), date.substring(11, 19));
         setAmount(1);
+        setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().addString("pf_clock"));
         ItemMeta meta = getItemMeta();
-        meta.setCustomModelData(2103);
         meta.displayName(Component.text(time, TextColor.fromHexString("#17fc32"))
                 .decoration(TextDecoration.ITALIC, false));
         meta.lore(List.of(Component.text(joinDate, TextColor.fromHexString("#17fc32"))
