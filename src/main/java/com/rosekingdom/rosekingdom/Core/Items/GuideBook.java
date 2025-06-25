@@ -1,5 +1,7 @@
 package com.rosekingdom.rosekingdom.Core.Items;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -12,13 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GuideBook extends ItemStack {
+    @SuppressWarnings("UnstableApiUsage")
     public GuideBook() {
         super(Material.WRITTEN_BOOK);
         setAmount(1);
+        setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().addString("guidebook"));
         ItemMeta meta = this.getItemMeta();
         meta.displayName(Component.text("Server Guide", TextColor.fromHexString("#ffbf00")).decoration(TextDecoration.ITALIC, false));
         BookMeta book = (BookMeta) meta;
-        book.setAuthor("RoseKing");
+        book.setAuthor("the Server");
         List<Component> page = new ArrayList<>();
         page.add(Component.text("          Welcome\n", TextColor.fromHexString("#e63212"))
                 .append(Component.text("              to\n", TextColor.fromHexString("#e63212")))
@@ -69,7 +73,6 @@ public class GuideBook extends ItemStack {
                 .append(Component.text("for0ut (lookingforout)")));
         book.pages(page);
         book.setEnchantmentGlintOverride(false);
-        book.setCustomModelData(1);
         setItemMeta(book);
     }
 }

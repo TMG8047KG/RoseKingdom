@@ -2,6 +2,7 @@ package com.rosekingdom.rosekingdom.Core.gui.InventoryTypes;
 
 import com.rosekingdom.rosekingdom.Core.gui.InventoryButton;
 import com.rosekingdom.rosekingdom.Core.gui.InventoryHandler;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -15,9 +16,14 @@ import java.util.Map;
 public abstract class InventoryGUI implements InventoryHandler {
     private final Inventory inventory;
     private final Map<Integer, InventoryButton> buttonMap = new HashMap<>();
+    private OfflinePlayer targetPlayer;
 
     public InventoryGUI() {
         this.inventory = this.createInventory();
+    }
+
+    protected InventoryGUI(Object... params) {
+        this.inventory = this.createInventory(params);
     }
 
     public Inventory getInventory() {
@@ -55,4 +61,7 @@ public abstract class InventoryGUI implements InventoryHandler {
     }
 
     protected abstract Inventory createInventory();
+    protected Inventory createInventory(Object... params) {
+        return this.createInventory();
+    }
 }

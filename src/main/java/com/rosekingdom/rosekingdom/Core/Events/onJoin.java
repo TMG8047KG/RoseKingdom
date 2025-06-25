@@ -11,7 +11,6 @@ import com.rosekingdom.rosekingdom.Graves.Grave;
 import com.rosekingdom.rosekingdom.Graves.GraveHandler;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
 import com.rosekingdom.rosekingdom.Moderation.Utils.vanish;
-import com.rosekingdom.rosekingdom.Profiles.Statements.ProfileStatement;
 import com.rosekingdom.rosekingdom.RoseKingdom;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
@@ -60,7 +59,6 @@ public class onJoin implements Listener {
         if(!UserStatement.exists(player.getUniqueId())) {
             UserStatement.insert(player.getName(), player.getUniqueId().toString());
             EconomyStatement.insert(player);
-            ProfileStatement.createProfile(player);
             player.getInventory().addItem(new GuideBook());
         }
 
@@ -69,17 +67,6 @@ public class onJoin implements Listener {
         Kingdom kingdom = KingdomHandler.getKingdom(player);
         if(kingdom != null && kingdom.getInChat().contains(player.getUniqueId())){
             player.sendMessage(Component.text("You are currently chatting with " + kingdom.getName() + "'s members.", TextColor.fromHexString("#5ae630")));
-        }
-      
-        //Activity Streak Checker
-        long lastOnline = player.getLastSeen();
-        Instant instant = Instant.ofEpochMilli(lastOnline);
-        LocalDate lastActiveOn = instant.atZone(ZoneId.systemDefault()).toLocalDate();
-
-        if(!LocalDate.now().equals(lastActiveOn) && LocalDate.now().minusDays(1).equals(lastActiveOn)){
-            isActive(player);
-        }else{
-            ProfileStatement.updateStreak(player, 1);
         }
 
         sendServerLinks(player);
@@ -110,21 +97,5 @@ public class onJoin implements Listener {
         } catch (URISyntaxException e) {
             Message.Exception("A link is not working", e);
         }
-    }
-
-    //TODO: Change the way of counting and checking if a player was active that day for a sertan time
-    private void isActive(Player player){
-        BukkitScheduler scheduler = Bukkit.getScheduler();
-        scheduler.runTaskLater(JavaPlugin.getPlugin(RoseKingdom.class), () -> {
-            if(player.isOnline()){
-                int score = ProfileStatement.getStreak(player);
-                int highscore = ProfileStatement.getHighscore(player);
-                score++;
-                ProfileStatement.updateStreak(player, score);
-                if(highscore < score){
-                    ProfileStatement.setHighscore(player, score);
-                }
-            }
-        }, 10 * 60 * 20);
     }
 }
