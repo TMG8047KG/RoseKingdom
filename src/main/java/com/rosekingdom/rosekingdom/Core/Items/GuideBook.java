@@ -22,7 +22,7 @@ public class GuideBook extends ItemStack {
         ItemMeta meta = this.getItemMeta();
         meta.displayName(Component.text("Server Guide", TextColor.fromHexString("#ffbf00")).decoration(TextDecoration.ITALIC, false));
         BookMeta book = (BookMeta) meta;
-        book.setAuthor("RoseKing");
+        book.setAuthor("the Server");
         List<Component> page = new ArrayList<>();
         page.add(Component.text("          Welcome\n", TextColor.fromHexString("#e63212"))
                 .append(Component.text("              to\n", TextColor.fromHexString("#e63212")))

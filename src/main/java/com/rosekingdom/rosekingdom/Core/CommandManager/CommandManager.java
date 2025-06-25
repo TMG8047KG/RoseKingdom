@@ -7,7 +7,6 @@ import com.rosekingdom.rosekingdom.Economy.Commands.Coins;
 import com.rosekingdom.rosekingdom.Economy.Commands.Store;
 import com.rosekingdom.rosekingdom.Graves.GraveCommand;
 import com.rosekingdom.rosekingdom.Moderation.Commands.*;
-import com.rosekingdom.rosekingdom.Profiles.Profile;
 import com.rosekingdom.rosekingdom.Tab.Commands.AFK;
 import com.rosekingdom.rosekingdom.Tab.Commands.Ranking;
 import com.rosekingdom.rosekingdom.Tab.Kingdoms.Commands.kingdom_main_command;
@@ -39,7 +38,6 @@ public class CommandManager implements TabExecutor {
         addCommand(new Bugs());
         addCommand(new Feedback());
         addCommand(new GraveCommand());
-        addCommand(new Profile());
         addCommand(new ResourcePackTesting());
         addCommand(new PlayTime());
         addCommand(new Coins());

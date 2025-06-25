@@ -9,8 +9,10 @@ database: true
 description: RoseKingdom's core plugin
 depend:
   - Locations
+  - Profiles
 loadbefore:
   - Locations
+  - Profiles
 
 commands:
   timers:
@@ -51,9 +53,6 @@ commands:
   grave:
     description: Open the grave
     permission: rk.MOD
-  profile:
-    permission: rk.DEFAULT
-    description: Opens your game profile
   rank:
     permission: rk.OWNER
     description: sets/removes ranks
