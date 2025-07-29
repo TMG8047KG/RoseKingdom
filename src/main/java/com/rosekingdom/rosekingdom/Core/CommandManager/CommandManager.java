@@ -7,9 +7,6 @@ import com.rosekingdom.rosekingdom.Economy.Commands.Coins;
 import com.rosekingdom.rosekingdom.Economy.Commands.Store;
 import com.rosekingdom.rosekingdom.Graves.GraveCommand;
 import com.rosekingdom.rosekingdom.Moderation.Commands.*;
-import com.rosekingdom.rosekingdom.Tab.Commands.AFK;
-import com.rosekingdom.rosekingdom.Tab.Commands.Ranking;
-import com.rosekingdom.rosekingdom.Tab.Kingdoms.Commands.kingdom_main_command;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -33,7 +30,6 @@ public class CommandManager implements TabExecutor {
     }
 
     private void commandList(){
-        addCommand(new Ranking());
         addCommand(new CheckPermissions());
         addCommand(new Bugs());
         addCommand(new Feedback());
@@ -42,15 +38,9 @@ public class CommandManager implements TabExecutor {
         addCommand(new PlayTime());
         addCommand(new Coins());
         addCommand(new Store());
-        addCommand(new Kick());
-        addCommand(new Ban());
-        addCommand(new BanIp());
-        addCommand(new vanishCommand());
         addCommand(new TimersChecker());
         addCommand(new NPCOptions());
-        addCommand(new kingdom_main_command());
         addCommand(new getGuideBook());
-        addCommand(new AFK());
         addCommand(new Discord());
     }
 

@@ -1,8 +1,8 @@
 package com.rosekingdom.rosekingdom.Core.Events;
 
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
-import com.rosekingdom.rosekingdom.Tab.Kingdoms.Kingdom;
-import com.rosekingdom.rosekingdom.Tab.Kingdoms.KingdomHandler;
+import com.roseworld.tab.Kingdoms.Kingdom;
+import com.roseworld.tab.Kingdoms.KingdomHandler;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;

@@ -1,7 +1,7 @@
 name: RoseKingdom
 version: '${version}'
 main: com.rosekingdom.rosekingdom.RoseKingdom
-api-version: 1.21.5
+api-version: 1.21.8
 author: TMG8047KG
 website: https://github.com/RozeWorld/RoseKingdom
 prefix: RoseKingdom
@@ -10,9 +10,11 @@ description: RoseKingdom's core plugin
 depend:
   - Locations
   - Profiles
+  - Tab
 loadbefore:
   - Locations
   - Profiles
+  - Tab
 
 commands:
   timers:
@@ -46,17 +48,9 @@ commands:
   npc:
     description: NPC Controller command
     permission: rk.ADMIN
-  kingdom:
-    description: Creates a group
-    aliases:
-      - kd
   grave:
     description: Open the grave
     permission: rk.MOD
-  rank:
-    permission: rk.OWNER
-    description: sets/removes ranks
-    usage: /<command> <player> <rank>
   perms:
     permission: rk.MOD
     description: check your permissions
@@ -69,8 +63,6 @@ commands:
     permission: rk.ARTIST
   playtime:
     description: Returns play time on the server
-  afk:
-    description: Sets your status to AFK
   discord:
     description: Discord link for our server
 

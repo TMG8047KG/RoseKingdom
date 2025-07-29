@@ -1,14 +1,10 @@
 package com.rosekingdom.rosekingdom.Core.Items;
 
-import io.papermc.paper.datacomponent.DataComponentType;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ItemType;
-import org.bukkit.inventory.meta.BlockDataMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
