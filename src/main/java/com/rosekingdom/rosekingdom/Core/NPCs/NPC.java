@@ -294,7 +294,7 @@ public class NPC {
     public Entity getNPCEntity(){
         return npc;
     }
-
+  
     public boolean isOnTabList(){
         return onTabList;
     }
