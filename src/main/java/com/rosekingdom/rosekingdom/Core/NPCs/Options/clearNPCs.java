@@ -3,7 +3,7 @@ package com.rosekingdom.rosekingdom.Core.NPCs.Options;
 import com.rosekingdom.rosekingdom.Core.CommandManager.subCommandRK;
 import com.rosekingdom.rosekingdom.Core.NPCs.NPC;
 import com.rosekingdom.rosekingdom.Core.NPCs.NPCHandler;
-import com.rosekingdom.rosekingdom.Tab.Tab;
+import com.roseworld.tab.TabList;
 import org.bukkit.command.CommandSender;
 import org.bukkit.scoreboard.Team;
 
@@ -17,13 +17,13 @@ public class clearNPCs extends subCommandRK {
     @Override
     public void executeSub(CommandSender sender, String[] args) {
         for(NPC npc : NPCHandler.getNPCs()){
-            for(Team team : Tab.getBoard().getTeams()){
+            for(Team team : TabList.getBoard().getTeams()){
                 if(team.getName().equals(npc.getName())){
                     team.unregister();
                 }
             }
             npc.despawn();
         }
-        Tab.refreshScoreboard();
+        TabList.refreshScoreboard();
     }
 }

@@ -1,8 +1,5 @@
 package com.rosekingdom.rosekingdom.Graves;
 
-import com.rosekingdom.rosekingdom.Core.Database.Main_Statements.UserStatement;
-import com.rosekingdom.rosekingdom.Core.NPCs.NPC;
-import com.rosekingdom.rosekingdom.Core.NPCs.NPCHandler;
 import com.rosekingdom.rosekingdom.Graves.Statements.DeathStatement;
 import com.rosekingdom.rosekingdom.Graves.Statements.GraveStatement;
 import io.papermc.paper.event.packet.PlayerChunkLoadEvent;

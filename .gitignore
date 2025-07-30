@@ -38,6 +38,7 @@ local.properties
 *.iws
 .idea/
 
+
 #################
 ## NetBeans
 #################
@@ -198,3 +199,4 @@ hs_err_pid*
 docs/dev/
 /rosekingdom
 /rosekingdom.pub
+/lib/

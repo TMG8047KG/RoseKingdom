@@ -16,7 +16,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ClientInformation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.Entity;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.CraftServer;
@@ -291,6 +291,10 @@ public class NPC {
         return npc;
     }
 
+    public Entity getNPCEntity(){
+        return npc;
+    }
+  
     public boolean isOnTabList(){
         return onTabList;
     }
