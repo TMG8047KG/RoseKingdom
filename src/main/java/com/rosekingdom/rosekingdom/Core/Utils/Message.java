@@ -45,6 +45,9 @@ public class Message {
                 .color(TextColor.fromHexString(color));
     }
 
+
+    // TEXT COLORS
+
     public static Component Gold(String text){
         return Component.text(text)
                 .color(TextColor.fromHexString("#FFA500"));
@@ -97,6 +100,13 @@ public class Message {
         return Component.text(text)
                 .color(TextColor.fromHexString("#808080"));
     }
+    public static Component White(String text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#fff"));
+    }
+
+
+    // INT COLORS
 
     public static Component Gold(int text){
         return Component.text(text)
@@ -150,6 +160,126 @@ public class Message {
         return Component.text(text)
                 .color(TextColor.fromHexString("#808080"));
     }
+    public static Component White(int text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#fff"));
+    }
 
+    // FLOAT COLORS
 
+    public static Component Gold(float text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#FFA500"));
+    }
+    public static Component Red(float text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#FF0000"));
+    }
+    public static Component Green(float text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#006400"));
+    }
+    public static Component Lime(float text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#32CD32"));
+    }
+    public static Component LightBlue(float text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#00FFFF"));
+    }
+    public static Component Purple(float text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#A020F0"));
+    }
+    public static Component Blue(float text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#0000FF"));
+    }
+    public static Component Orange(float text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#ff7d00"));
+    }
+    public static Component Magenta(float text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#FF00FF"));
+    }
+    public static Component Pink(float text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#FFc0cb"));
+    }
+    public static Component Bronze(float text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#CE8946"));
+    }
+    public static Component Black(float text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#000"));
+    }
+    public static Component Gray(float text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#808080"));
+    }
+    public static Component White(float text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#fff"));
+    }
+
+    // DOUBLE COLORS
+
+    public static Component Gold(double text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#FFA500"));
+    }
+    public static Component Red(double text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#FF0000"));
+    }
+    public static Component Green(double text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#006400"));
+    }
+    public static Component Lime(double text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#32CD32"));
+    }
+    public static Component LightBlue(double text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#00FFFF"));
+    }
+    public static Component Purple(double text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#A020F0"));
+    }
+    public static Component Blue(double text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#0000FF"));
+    }
+    public static Component Orange(double text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#ff7d00"));
+    }
+    public static Component Magenta(double text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#FF00FF"));
+    }
+    public static Component Pink(double text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#FFc0cb"));
+    }
+    public static Component Bronze(double text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#CE8946"));
+    }
+    public static Component Black(double text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#000"));
+    }
+    public static Component Gray(double text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#808080"));
+    }
+    public static Component White(double text){
+        return Component.text(text)
+                .color(TextColor.fromHexString("#fff"));
+    }
 }
